@@ -894,7 +894,7 @@
             box-shadow: 0 0 25px rgba(0, 240, 255, 0.1);
             transition: all 0.4s ease;
             position: relative;
-            group: hover;
+
         }
 
         .certificate-card::before {
@@ -1053,14 +1053,17 @@
         }
 
         .projects-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 2.5rem;
             position: relative;
             z-index: 2;
         }
 
         .project-card {
+            flex: 1 1 300px;
+            max-width: 400px;
             background-color: rgba(20, 20, 40, 0.7);
             border-radius: 10px;
             overflow: hidden;
@@ -1379,6 +1382,88 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
             opacity: 0.7;
+        }
+
+        /* Certificate Modal */
+        .certificate-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(10, 10, 30, 0.95);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .certificate-modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 900px;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .certificate-modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            min-height: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #00f0ff;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 2001;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #00f0ff;
+            text-decoration: none;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+        }
+
+        .certificate-card {
+            cursor: pointer;
+        }
+
+        .design-image {
+            cursor: pointer;
         }
 
         /* Responsive styles */
@@ -2102,6 +2187,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- New Project Placeholder -->
                 <div class="project-card">
                     <div class="project-img">
@@ -2117,6 +2203,23 @@
                                     class="fab fa-github"></i> GitHub</a>
                             <a href="https://collaborative-note-app-cyan.vercel.app/"><i
                                     class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img">
+                        <img src="adms.png" alt="ADMS">
+                    </div>
+                    <div class="project-content">
+                        <h3>ADMS</h3>
+                        <p>Designed and developed a fully functional Hospital Management System focusing on efficient
+                            patient management, streamlined hospital workflows, and reliable system operations.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://github.com/Midhun-jomi/ADMS"><i class="fab fa-github"></i> GitHub</a>
+                            <a href="https://adms-g7la.onrender.com/index.php"><i class="fas fa-external-link-alt"></i>
+                                Live Demo</a>
                         </div>
                     </div>
                 </div>
@@ -2167,7 +2270,17 @@
         <p>&copy; 2025 Midhun Jomi C 💙. All Rights Reserved.</p>
     </footer>
 
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="certificate-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script>
+
+
         // Design Showcase Variables
         let currentSlide = 0;
         const totalSlides = 13;
@@ -2542,6 +2655,87 @@
 
             // Start particles
             initParticles();
+
+            // Initialize Tilt
+            VanillaTilt.init(document.querySelectorAll(".skill-card, .project-card, .certificate-card, .timeline-content"), {
+                max: 15,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.2,
+                scale: 1.05
+            });
+
+            // Certificate & Design Modal Functionality
+            const modal = document.getElementById('certificateModal');
+            const modalImg = document.getElementById('modalImage');
+            const captionText = document.getElementById('caption');
+            const closeModal = document.querySelector('.close-modal');
+
+            function openModal(imgSrc, imgAlt) {
+                if (modal) {
+                    modal.style.display = "block";
+                    setTimeout(() => {
+                        modal.classList.add('show');
+                    }, 10);
+                    modalImg.src = imgSrc;
+                    captionText.innerHTML = imgAlt;
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            // Click events for certificate images (handled via wrapper for better hit area)
+            document.querySelectorAll('.certificate-image').forEach(wrapper => {
+                wrapper.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const img = this.querySelector('img');
+                    if (img) openModal(img.src, img.alt);
+                });
+            });
+
+            // Click events for design showcase images
+            document.querySelectorAll('.design-slide .design-image').forEach(wrapper => {
+                wrapper.addEventListener('click', function (e) {
+                    // Start dragging check for carousel vs click
+                    // For now, simple click. If it conflicts with swipe, we might need logic.
+                    // But usually a click without movement is fine.
+                    e.stopPropagation();
+                    const img = this.querySelector('img');
+                    if (img) openModal(img.src, img.alt);
+                });
+            });
+
+            // Close modal handlers
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    modal.classList.remove('show');
+                    setTimeout(() => {
+                        modal.style.display = "none";
+                        document.body.style.overflow = 'auto';
+                    }, 300);
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                        setTimeout(() => {
+                            modal.style.display = "none";
+                            document.body.style.overflow = 'auto';
+                        }, 300);
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && modal && modal.style.display === "block") {
+                    modal.classList.remove('show');
+                    setTimeout(() => {
+                        modal.style.display = "none";
+                        document.body.style.overflow = 'auto';
+                    }, 300);
+                }
+            });
         });
 
         // Typing Animation
