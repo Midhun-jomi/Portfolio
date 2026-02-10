@@ -370,6 +370,17 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('revealed');
+
+                // Animate progress bar if it's a skill card
+                if (entry.target.classList.contains('skill-card')) {
+                    const progressBar = entry.target.querySelector('.skill-progress-bar');
+                    const level = entry.target.getAttribute('data-level');
+                    if (progressBar && level) {
+                        setTimeout(() => {
+                            progressBar.style.width = level + '%';
+                        }, 200);
+                    }
+                }
             }
         });
     }, observerOptions);
