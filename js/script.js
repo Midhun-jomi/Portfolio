@@ -110,15 +110,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 draw() {
-                    sCtx.save();
+                    // Render high-performance nested neon glowing circles to bypass expensive CPU shadowBlur
+                    sCtx.globalAlpha = this.alpha * 0.25;
+                    sCtx.beginPath();
+                    sCtx.arc(this.x, this.y, this.size * 3.2, 0, Math.PI * 2);
+                    sCtx.fillStyle = this.color;
+                    sCtx.fill();
+
                     sCtx.globalAlpha = this.alpha;
                     sCtx.beginPath();
                     sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    sCtx.fillStyle = this.color;
-                    sCtx.shadowBlur = 8;
-                    sCtx.shadowColor = this.color;
+                    sCtx.fillStyle = '#FFFFFF';
                     sCtx.fill();
-                    sCtx.restore();
                 }
             }
 
@@ -128,15 +131,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     sparks.push(new Spark(x, y, color));
                 }
+
+                // Cap active sparks to prevent frame-rate degradation on rapid multi-clicks
+                const maxActiveSparks = 80;
+                if (sparks.length > maxActiveSparks) {
+                    sparks.splice(0, sparks.length - maxActiveSparks);
+                }
             }
 
             // Click spark burst
             preloader.addEventListener('click', (e) => {
+                if (!sparksActive) return;
                 spawnSparks(e.clientX, e.clientY, 20);
             });
 
             // Hover spark trail
             preloader.addEventListener('mousemove', (e) => {
+                if (!sparksActive) return;
                 if (Math.random() < 0.18) {
                     spawnSparks(e.clientX, e.clientY, 2);
                 }
@@ -289,17 +300,17 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('reveal-item');
     });
 
-    // Initialize VanillaTilt glare effects
+    // Initialize VanillaTilt glare effects (Highly optimized to main bento and project cards to eliminate input/click lag)
     if (typeof VanillaTilt !== 'undefined') {
         VanillaTilt.init(document.querySelectorAll(
-            '.bento-card:not(.card-profile), .timeline-card, .skill-card, .certificate-card, .project-card, .contact-info-card, .contact-form-card'
+            '.bento-card:not(.card-profile), .project-card'
         ), {
-            max: 8,
-            speed: 500,
+            max: 5, // Sleek, premium subtle 3D tilt angle
+            speed: 400,
             glare: true,
-            "max-glare": 0.12,
-            scale: 1.02,
-            perspective: 1000
+            "max-glare": 0.1,
+            scale: 1.01,
+            perspective: 900
         });
     }
 
@@ -430,16 +441,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // ------------------------------------------
     const header = document.querySelector('header');
     
-    // Scrolled header background blur threshold
-    window.addEventListener('scroll', () => {
-        if (header) {
-            header.classList.toggle('scrolled', window.scrollY > 40);
+    let isHeaderScrolled = false;
+    let isScrollingActive = false;
+    let scrollTimeout = null;
+
+    // Fast-path scrolling indicator toggles
+    function startScrolling() {
+        if (!isScrollingActive) {
+            isScrollingActive = true;
+            document.body.classList.add('is-scrolling');
         }
-    });
+    }
+
+    function stopScrolling() {
+        isScrollingActive = false;
+        document.body.classList.remove('is-scrolling');
+    }
+
+    // Optimized scroll operations with passive listener
+    window.addEventListener('scroll', () => {
+        // Toggle header scrolled state efficiently without style thrashing
+        if (header) {
+            const shouldScroll = window.scrollY > 40;
+            if (shouldScroll !== isHeaderScrolled) {
+                isHeaderScrolled = shouldScroll;
+                header.classList.toggle('scrolled', isHeaderScrolled);
+            }
+        }
+        
+        startScrolling();
+
+        // If 'scrollend' is not supported natively, use a debounced fallback
+        if (!('onscrollend' in window)) {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(stopScrolling, 120);
+        }
+    }, { passive: true });
+
+    // Use high-performance native scrollend event if supported by the browser
+    if ('onscrollend' in window) {
+        window.addEventListener('scrollend', stopScrolling, { passive: true });
+    }
 
     // IntersectionObserver for tracking active sections in menu links
     const sections = document.querySelectorAll('section');
     const navItems = document.querySelectorAll('.nav-links a');
+    
+    let isNavClickScrolling = false;
+    let navClickScrollTimeout = null;
+    let currentActiveId = '';
 
     const sectionObserverOptions = {
         root: null,
@@ -448,15 +498,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const sectionObserver = new IntersectionObserver((entries) => {
+        // If we are currently in an active smooth scroll triggered by nav links click, block intermediate observer switches to save cpu cycles
+        if (isNavClickScrolling) return;
+
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const activeId = entry.target.getAttribute('id');
-                navItems.forEach(item => {
-                    item.classList.remove('active');
-                    if (item.getAttribute('href') === `#${activeId}`) {
-                        item.classList.add('active');
-                    }
-                });
+                if (activeId !== currentActiveId) {
+                    currentActiveId = activeId;
+                    navItems.forEach(item => {
+                        const href = item.getAttribute('href');
+                        const isActive = href === `#${activeId}`;
+                        item.classList.toggle('active', isActive);
+                    });
+                }
             }
         });
     }, sectionObserverOptions);
@@ -465,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(section);
     });
 
-    // Mobile hamburger menu toggle
+    // Mobile hamburger menu toggle & performance-optimized direct click scroll triggers
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
@@ -474,15 +529,51 @@ document.addEventListener('DOMContentLoaded', () => {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('active');
         });
+    }
 
-        // Close when clicking item links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
+    // Connect nav click triggers to short-circuit active observer changes and switch active classes instantly
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Close mobile menu immediately if active
+            if (navLinks && hamburger) {
                 navLinks.classList.remove('active');
                 hamburger.classList.remove('active');
+            }
+
+            // Immediately switch active class on link items to feel instant
+            navItems.forEach(item => {
+                item.classList.toggle('active', item === link);
             });
+
+            // Flag scrolling state to prevent observers from overriding active highlighting during travel
+            isNavClickScrolling = true;
+
+            // Pre-reveal all elements in the target section instantly to prevent CPU animation spikes during active scrolling
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.querySelectorAll('.reveal-item, .bento-card, .timeline-card, .skill-card, .certificate-card, .project-card, .contact-info-card, .contact-form-card').forEach(el => {
+                        el.classList.add('revealed');
+                        
+                        // Handle skill-card progress bar widths instantly
+                        if (el.classList.contains('skill-card')) {
+                            const progressBar = el.querySelector('.progress-bar');
+                            const level = el.getAttribute('data-level');
+                            if (progressBar && level) {
+                                progressBar.style.width = `${level}%`;
+                            }
+                        }
+                    });
+                }
+            }
+            
+            clearTimeout(navClickScrollTimeout);
+            navClickScrollTimeout = setTimeout(() => {
+                isNavClickScrolling = false;
+            }, 850);
         });
-    }
+    });
 
     // ------------------------------------------
     // 6. Smooth Staggered Reveals & Progress Meters
@@ -814,19 +905,15 @@ if (canvas) {
             this.pulsePhase += this.pulseSpeed;
             const pulseSize = this.size + Math.sin(this.pulsePhase) * 1.2;
             
+            // Draw high-performance layered glowing arcs
             ctx.beginPath();
-            ctx.arc(this.x, this.y, Math.max(0.5, pulseSize), 0, Math.PI * 2, false);
+            ctx.arc(this.x, this.y, Math.max(1.0, pulseSize * 2.2), 0, Math.PI * 2, false);
+            ctx.fillStyle = `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.18)`;
+            ctx.fill();
             
-            // High-end radial glow rendering for cosmic star atmosphere
-            const glow = ctx.createRadialGradient(
-                this.x, this.y, Math.max(0.1, pulseSize * 0.1),
-                this.x, this.y, Math.max(1, pulseSize * 2.8)
-            );
-            glow.addColorStop(0, `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.75)`);
-            glow.addColorStop(0.25, `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.3)`);
-            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            
-            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, Math.max(0.5, pulseSize * 0.7), 0, Math.PI * 2, false);
+            ctx.fillStyle = `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.85)`;
             ctx.fill();
         }
 
@@ -896,6 +983,8 @@ if (canvas) {
         const maxDistSq = maxDist * maxDist;
         const len = particlesArray.length;
         
+        ctx.lineWidth = 1.0;
+        
         for (let a = 0; a < len; a++) {
             const pA = particlesArray[a];
             for (let b = a + 1; b < len; b++) {
@@ -906,15 +995,10 @@ if (canvas) {
                 
                 if (distSq < maxDistSq) {
                     const dist = Math.sqrt(distSq);
-                    const opacity = (1 - (dist / maxDist)) * 0.24;
+                    const opacity = (1 - (dist / maxDist)) * 0.20;
                     
-                    // Create gorgeous color-shifting gradients connecting neighboring star systems
-                    const grad = ctx.createLinearGradient(pA.x, pA.y, pB.x, pB.y);
-                    grad.addColorStop(0, `rgba(${pA.colorConfig.r}, ${pA.colorConfig.g}, ${pA.colorConfig.b}, ${opacity})`);
-                    grad.addColorStop(1, `rgba(${pB.colorConfig.r}, ${pB.colorConfig.g}, ${pB.colorConfig.b}, ${opacity})`);
-                    
-                    ctx.strokeStyle = grad;
-                    ctx.lineWidth = 1.2;
+                    // High-performance solid strokes using particle start color
+                    ctx.strokeStyle = `rgba(${pA.colorConfig.r}, ${pA.colorConfig.g}, ${pA.colorConfig.b}, ${opacity})`;
                     ctx.beginPath();
                     ctx.moveTo(pA.x, pA.y);
                     ctx.lineTo(pB.x, pB.y);
@@ -925,6 +1009,11 @@ if (canvas) {
     }
 
     function animateParticles() {
+        // High-performance shortcut: if the viewport is actively scrolling, freeze particles to free up 100% CPU/GPU resources
+        if (isScrollingActive) {
+            animationFrameId = requestAnimationFrame(animateParticles);
+            return;
+        }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particlesArray.forEach(p => p.update());
         connectParticles();

@@ -67,6 +67,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Disable pointer events during active scroll to lock rendering performance at 60FPS */
+body.is-scrolling,
+body.is-scrolling * {
+    pointer-events: none !important;
+}
+
 /* Subtle Premium Tech Grid Overlay */
 body::before {
     content: '';
@@ -122,8 +128,8 @@ body::before {
 .custom-cursor-glow {
     width: 32px;
     height: 32px;
-    border: 1px solid rgba(20, 184, 166, 0.45);
-    background-color: rgba(20, 184, 166, 0.04);
+    border: 1.5px solid rgba(20, 184, 166, 0.55);
+    background-color: rgba(20, 184, 166, 0.03);
     position: fixed;
     top: 0;
     left: 0;
@@ -131,8 +137,7 @@ body::before {
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
-    mix-blend-mode: difference;
-    /* Inverts color over contrasting sections for ultra premium tech feel */
+    box-shadow: 0 0 10px rgba(20, 184, 166, 0.15);
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, background-color 0.4s;
 }
 
@@ -377,6 +382,7 @@ header {
     pointer-events: auto;
     /* Active elements inside header */
     transition: var(--transition-medium);
+    will-change: transform, background, border-color, box-shadow, padding;
 }
 
 header.scrolled .nav-container {
@@ -2480,6 +2486,7 @@ footer {
     border-radius: 2px;
     box-shadow: 0 0 10px var(--accent-teal-glow);
     animation: bounceEQ 0.8s ease-in-out infinite alternate;
+    transform-origin: bottom;
 }
 
 .eq-bar.bar-1 {
