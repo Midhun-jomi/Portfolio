@@ -613,6 +613,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     }
+
+    // ------------------------------------------
+    // 8.5. Bento Cards Auto-Scrolling (GPU-Accelerated CSS Engine)
+    // ------------------------------------------
+    function initBentoAutoScroll() {
+        const scrollBodies = document.querySelectorAll('.bento-scroll-body');
+        
+        function calculateScrollDistances() {
+            scrollBodies.forEach(body => {
+                const content = body.querySelector('.scroll-content');
+                if (!content) return;
+                
+                // Clear previous variables/classes to capture pure DOM heights
+                content.classList.remove('auto-scroll-active');
+                body.style.removeProperty('--scroll-dist');
+                
+                // Height of the visible scrolling container in the middle of the card
+                const availableHeight = body.clientHeight;
+                
+                // Total height of the scrollable content
+                const scrollHeight = content.scrollHeight;
+                
+                const scrollDistance = scrollHeight - availableHeight;
+                
+                if (scrollDistance > 8) { // Only animate if content overflows significantly
+                    body.style.setProperty('--scroll-dist', `${scrollDistance}px`);
+                    
+                    // Stagger activation for a fluid, organic entrance
+                    setTimeout(() => {
+                        content.classList.add('auto-scroll-active');
+                    }, Math.random() * 800 + 400);
+                }
+            });
+        }
+
+        // Run once DOM is fully drawn and loaded
+        setTimeout(calculateScrollDistances, 1000);
+        
+        // Dynamic recalculation on window resize for liquid layouts
+        window.addEventListener('resize', () => {
+            clearTimeout(window.bentoResizeTimeout);
+            window.bentoResizeTimeout = setTimeout(calculateScrollDistances, 250);
+        });
+    }
+    
+    initBentoAutoScroll();
 });
 
 // ------------------------------------------
