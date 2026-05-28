@@ -1,13 +1,634 @@
+/*
+ * ==========================================
+ * Midhun Jomi C - Portfolio Redesign Scripts
+ * Interactive Experience Engine
+ * ==========================================
+ */
 
-// Design Showcase Variables
+// Top-level global coordinates accessible by all sub-systems (Preloader Sparks, Cosmic Nebula Background, Custom Cursor)
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // ------------------------------------------
+    // 0. Futuristic Sci-Fi HUD Preloader V3.0 Logic (3D Astrolabe & Magnetic Sparks Masterpiece)
+    // ------------------------------------------
+    const preloader = document.getElementById('preloader');
+    const progressBar = document.getElementById('preloaderProgressBar');
+    const percentLabel = document.getElementById('preloaderPercent');
+    const terminal = document.getElementById('preloaderTerminal');
+    const hudContent = document.getElementById('preloaderHUD');
+    const shockwave = document.getElementById('preloaderShockwave');
+    const svgBar = document.getElementById('preloaderSVGBar');
+    const sparksCanvas = document.getElementById('preloaderSparksCanvas');
+    const logoContainer = document.getElementById('preloaderLogoContainer');
+
+    if (preloader && progressBar && percentLabel && terminal) {
+        // Lock body scrolling immediately on initial load
+        document.body.style.overflow = 'hidden';
+
+        // 3D Parallax Gyroscope variables
+        let targetTiltX = 0;
+        let targetTiltY = 0;
+        let currentTiltX = 0;
+        let currentTiltY = 0;
+
+        // Track mouse movements relative to viewport center to calculate 3D gyroscopic tilt
+        preloader.addEventListener('mousemove', (e) => {
+            const rect = preloader.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const deltaX = e.clientX - centerX;
+            const deltaY = e.clientY - centerY;
+
+            // Compute rotations up to a sleek 20 degrees maximum angle
+            targetTiltX = (deltaY / centerY) * -20; // Inverted Y-axis tilt for organic physical reaction
+            targetTiltY = (deltaX / centerX) * 20;  // Standard X-axis tilt matching mouse direction
+        });
+
+        preloader.addEventListener('mouseleave', () => {
+            targetTiltX = 0;
+            targetTiltY = 0;
+        });
+
+        // 1. Interactive Cyber Sparks Canvas loop
+        let sparksActive = true;
+        if (sparksCanvas) {
+            const sCtx = sparksCanvas.getContext('2d');
+            let sparks = [];
+
+            sparksCanvas.width = window.innerWidth;
+            sparksCanvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                sparksCanvas.width = window.innerWidth;
+                sparksCanvas.height = window.innerHeight;
+            });
+
+            class Spark {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.size = Math.random() * 2.2 + 1;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 4.5 + 2.5;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.color = color;
+                    this.alpha = 1;
+                    this.decay = Math.random() * 0.018 + 0.012; // Slightly longer lifespan for spectacular trails
+                    this.gravity = 0.06; // Reduced slightly to favor magnetic cursor swirl paths
+                }
+
+                update() {
+                    // Calculate distance to current mouse coordinates
+                    const dx = mouseX - this.x;
+                    const dy = mouseY - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    // Proportional gravitational attraction towards cursor coordinates
+                    if (dist < 400 && dist > 5) {
+                        const pullForce = ((400 - dist) / 400) * 0.38;
+                        this.vx += (dx / dist) * pullForce;
+                        this.vy += (dy / dist) * pullForce;
+
+                        // Perpendicular orbital vector force for interactive spark vortex swirls
+                        const swirlX = -dy / dist;
+                        const swirlY = dx / dist;
+                        const swirlForce = ((400 - dist) / 400) * 0.18;
+                        this.vx += swirlX * swirlForce;
+                        this.vy += swirlY * swirlForce;
+                    }
+
+                    this.vy += this.gravity;
+                    this.vx *= 0.95; // Custom drag coefficient for swirling trails
+                    this.vy *= 0.95;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.alpha -= this.decay;
+                }
+
+                draw() {
+                    sCtx.save();
+                    sCtx.globalAlpha = this.alpha;
+                    sCtx.beginPath();
+                    sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    sCtx.fillStyle = this.color;
+                    sCtx.shadowBlur = 8;
+                    sCtx.shadowColor = this.color;
+                    sCtx.fill();
+                    sCtx.restore();
+                }
+            }
+
+            function spawnSparks(x, y, count) {
+                const colors = ['#14B8A6', '#8B5CF6', '#D946EF'];
+                for (let i = 0; i < count; i++) {
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    sparks.push(new Spark(x, y, color));
+                }
+            }
+
+            // Click spark burst
+            preloader.addEventListener('click', (e) => {
+                spawnSparks(e.clientX, e.clientY, 20);
+            });
+
+            // Hover spark trail
+            preloader.addEventListener('mousemove', (e) => {
+                if (Math.random() < 0.18) {
+                    spawnSparks(e.clientX, e.clientY, 2);
+                }
+            });
+
+            function animateSparks() {
+                if (!sparksActive) return;
+                sCtx.clearRect(0, 0, sparksCanvas.width, sparksCanvas.height);
+
+                // Smoothly interpolate gyroscopic 3D tilt coordinates
+                if (logoContainer) {
+                    currentTiltX += (targetTiltX - currentTiltX) * 0.1;
+                    currentTiltY += (targetTiltY - currentTiltY) * 0.1;
+                    logoContainer.style.transform = `rotateX(${currentTiltX}deg) rotateY(${currentTiltY}deg)`;
+                }
+
+                for (let i = sparks.length - 1; i >= 0; i--) {
+                    sparks[i].update();
+                    if (sparks[i].alpha <= 0) {
+                        sparks.splice(i, 1);
+                    } else {
+                        sparks[i].draw();
+                    }
+                }
+                requestAnimationFrame(animateSparks);
+            }
+            animateSparks();
+        }
+
+        // Enriched array of diagnostic terminal logs representing high-end boot sequence steps
+        const bootLogs = [
+            { pct: 4, msg: '> INITIATING NEURAL FIELD MATRIX...', type: 'success' },
+            { pct: 12, msg: '> CONNECTING VECTOR ENGINE PROCESSORS...', type: 'success' },
+            { pct: 20, msg: '[ WARN ] VECTOR COUPLING DRIFT DETECTED (+0.042mrad)', type: 'warn' },
+            { pct: 28, msg: '[  OK  ] AUTOMATIC REALIGN COMPLETED SECURELY', type: 'success' },
+            { pct: 35, msg: '> SYNCHRONIZING CORE SUB-LEVEL THREADS...', type: 'success' },
+            { pct: 42, msg: '[ WARN ] MEMORY BUFFER OVERFLOW IN HEX D30F', type: 'warn' },
+            { pct: 50, msg: '[  OK  ] FLUSHING CACHE & DYNAMICALLY ALLOCATING HEAP', type: 'success' },
+            { pct: 58, msg: '> LOCKING 3D MOUSE PARALLAX COORDINATES...', type: 'success' },
+            { pct: 66, msg: '> CACHING GLASS CARD PIXEL-PERFECT VIEWPORTS', type: 'success' },
+            { pct: 74, msg: '[ WARN ] ASYNC RENDER LATENCY SPIKE (34ms)', type: 'warn' },
+            { pct: 82, msg: '[  OK  ] DECODING ASYNC IMAGE PACKETS IN BACKGROUND', type: 'success' },
+            { pct: 90, msg: '> SPINNING UP HOLOGRAPHIC COMPASS HUDS...', type: 'success' },
+            { pct: 96, msg: '> SHIELDING PORTAL INTERFERENCE SHOCKWAVES...', type: 'success' },
+            { pct: 100, msg: '> SYSTEMS ONLINE. PORTAL READY.', type: 'success' }
+        ];
+
+        let logIndex = 0;
+        let count = 0;
+        let isLoaded = false;
+        
+        // Track resource load to speed up or resolve preloader securely
+        window.addEventListener('load', () => {
+            isLoaded = true;
+        });
+
+        const speed = 15; // Extremely smooth progressive boot intervals
+        
+        const loadingInterval = setInterval(() => {
+            if (count < 100) {
+                // If loaded, count slightly faster, but preserve full boot logger sequence
+                let increment = Math.floor(Math.random() * 3) + 1;
+                if (isLoaded) {
+                    increment = Math.floor(Math.random() * 4) + 2;
+                }
+                count += increment;
+                if (count > 100) count = 100;
+            }
+
+            // Fill standard progress bar
+            progressBar.style.width = `${count}%`;
+
+            // Fill concentric SVG bar (circumference = 465)
+            if (svgBar) {
+                const offset = 465 - (count / 100) * 465;
+                svgBar.style.strokeDashoffset = offset;
+            }
+
+            // Typographic glitch percent count
+            if (Math.random() < 0.08 && count < 100) {
+                const glitchedChars = ['#', '@', '%', '&', '*', 'X', '$', '?'];
+                const randChar = glitchedChars[Math.floor(Math.random() * glitchedChars.length)];
+                percentLabel.textContent = count + randChar;
+                setTimeout(() => {
+                    percentLabel.textContent = count + '%';
+                }, 60);
+            } else {
+                percentLabel.textContent = count + '%';
+            }
+
+            // Print diagnostic log line as specific thresholds are crossed
+            if (logIndex < bootLogs.length && count >= bootLogs[logIndex].pct) {
+                const line = document.createElement('div');
+                line.className = `terminal-line ${bootLogs[logIndex].type}`;
+                line.textContent = bootLogs[logIndex].msg;
+                terminal.appendChild(line);
+                
+                // Automatically scroll terminal to bottom
+                terminal.scrollTop = terminal.scrollHeight;
+                logIndex++;
+            }
+
+            if (count === 100) {
+                clearInterval(loadingInterval);
+                
+                // 1. Hud Portal Implodes (collapse) & shockwave fires
+                setTimeout(() => {
+                    if (hudContent) {
+                        hudContent.classList.add('implode');
+                    }
+                    if (shockwave) {
+                        shockwave.classList.add('blast');
+                    }
+
+                    // 2. Preloader Curtain slides up & locks reveals
+                    setTimeout(() => {
+                        preloader.classList.add('fade-out-curtain');
+                        document.body.style.overflow = ''; // Unlock viewport scrolling
+                        sparksActive = false; // Stop sparks canvas loop
+                        
+                        // 3. Staggered reveal cascades load in hero view
+                        setTimeout(() => {
+                            const heroRevealItems = document.querySelectorAll('.hero-section .reveal-item');
+                            heroRevealItems.forEach((el, index) => {
+                                setTimeout(() => {
+                                    el.classList.add('revealed');
+                                }, index * 120);
+                            });
+                        }, 400);
+                    }, 600); // Wait for the shockwave ripple wave to sweep across screen first!
+                }, 800);
+            }
+        }, speed);
+    }
+
+    // ------------------------------------------
+    // 1. Initial State & Asset Preps
+    // ------------------------------------------
+    // Set Year in footer
+    const currentYearEl = document.getElementById('currentYear');
+    if (currentYearEl) {
+        currentYearEl.textContent = new Date().getFullYear();
+    }
+
+    // Set scroll reveal class elements
+    const revealElements = document.querySelectorAll(
+        '.reveal-item, .bento-card, .timeline-card, .skill-card, .certificate-card, .project-card, .contact-info-card, .contact-form-card'
+    );
+    revealElements.forEach(el => {
+        el.classList.add('reveal-item');
+    });
+
+    // Initialize VanillaTilt glare effects
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(
+            '.bento-card:not(.card-profile), .timeline-card, .skill-card, .certificate-card, .project-card, .contact-info-card, .contact-form-card'
+        ), {
+            max: 8,
+            speed: 500,
+            glare: true,
+            "max-glare": 0.12,
+            scale: 1.02,
+            perspective: 1000
+        });
+    }
+
+    // ------------------------------------------
+    // 2. Fluid Magnetic Custom Cursor
+    // ------------------------------------------
+    const cursorDot = document.getElementById('customCursorDot');
+    const cursorGlow = document.getElementById('customCursorGlow');
+    
+    let dotX = mouseX;
+    let dotY = mouseY;
+    let glowX = mouseX;
+    let glowY = mouseY;
+
+    // Cache ambient background glow orbs once (avoids heavy querySelector queries on every frame)
+    const orbPrimary = document.querySelector('.orb-primary');
+    const orbSecondary = document.querySelector('.orb-secondary');
+    const orbTertiary = document.querySelector('.orb-tertiary');
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Easing loop (requestAnimationFrame) for smooth inertia/physics
+    function animateCursor() {
+        // Dot follows fast
+        dotX += (mouseX - dotX) * 0.3;
+        dotY += (mouseY - dotY) * 0.3;
+        if (cursorDot) {
+            cursorDot.style.left = `${dotX}px`;
+            cursorDot.style.top = `${dotY}px`;
+        }
+
+        // Glow follows with elegant delay (lerp)
+        glowX += (mouseX - glowX) * 0.12;
+        glowY += (mouseY - glowY) * 0.12;
+        if (cursorGlow) {
+            cursorGlow.style.left = `${glowX}px`;
+            cursorGlow.style.top = `${glowY}px`;
+        }
+
+        // Gently drift ambient background glow orbs based on mouse coordinates (3D parallax)
+        if (orbPrimary) {
+            const ox = (mouseX - window.innerWidth / 2) * 0.035;
+            const oy = (mouseY - window.innerHeight / 2) * 0.035;
+            orbPrimary.style.transform = `translate(${ox}px, ${oy}px)`;
+        }
+        if (orbSecondary) {
+            const ox = (mouseX - window.innerWidth / 2) * -0.025;
+            const oy = (mouseY - window.innerHeight / 2) * -0.025;
+            orbSecondary.style.transform = `translate(${ox}px, ${oy}px)`;
+        }
+        if (orbTertiary) {
+            const ox = (mouseX - window.innerWidth / 2) * 0.015;
+            const oy = (mouseY - window.innerHeight / 2) * -0.015;
+            orbTertiary.style.transform = `translate(${ox}px, ${oy}px)`;
+        }
+
+        requestAnimationFrame(animateCursor);
+    }
+    requestAnimationFrame(animateCursor);
+
+    // Expand cursor hover states over interactive components
+    const clickables = document.querySelectorAll(
+        'a, button, input, textarea, .hamburger, .indicator, .design-nav, .certificate-image'
+    );
+    clickables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            document.body.classList.add('cursor-hover');
+        });
+        el.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-hover');
+        });
+    });
+
+    // ------------------------------------------
+    // 3. Card Mouse-Tracking Radial Glow
+    // ------------------------------------------
+    const cards = document.querySelectorAll(
+        '.bento-card, .timeline-card, .skill-card, .certificate-card, .project-card, .contact-info-card, .contact-form-card'
+    );
+
+    cards.forEach(card => {
+        let rect = null;
+
+        card.addEventListener('mouseenter', () => {
+            rect = card.getBoundingClientRect();
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            if (!rect) {
+                rect = card.getBoundingClientRect();
+            }
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            rect = null; // Clear to prevent positioning bugs if screen layout changes
+        });
+    });
+
+    // ------------------------------------------
+    // 4. Interactive Magnetic Button CTA
+    // ------------------------------------------
+    const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            // Distance from center of button
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // Translate button slightly in cursor direction
+            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
+    // ------------------------------------------
+    // 5. Sticky Navigation Shrinker & Active Section Tracker
+    // ------------------------------------------
+    const header = document.querySelector('header');
+    
+    // Scrolled header background blur threshold
+    window.addEventListener('scroll', () => {
+        if (header) {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }
+    });
+
+    // IntersectionObserver for tracking active sections in menu links
+    const sections = document.querySelectorAll('section');
+    const navItems = document.querySelectorAll('.nav-links a');
+
+    const sectionObserverOptions = {
+        root: null,
+        rootMargin: '-30% 0px -40% 0px', // Trigger near screen middle
+        threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeId = entry.target.getAttribute('id');
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${activeId}`) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, sectionObserverOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    // Mobile hamburger menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close when clicking item links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    }
+
+    // ------------------------------------------
+    // 6. Smooth Staggered Reveals & Progress Meters
+    // ------------------------------------------
+    const scrollRevealOptions = {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
+    };
+
+    const scrollRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // If preloader overlay is still active, block scroll reveals in the hero area (preloader handles them staggeredly)
+                const preloaderActive = document.getElementById('preloader') && !document.getElementById('preloader').classList.contains('fade-out-curtain');
+                if (preloaderActive && entry.target.closest('.hero-section')) {
+                    return;
+                }
+                
+                entry.target.classList.add('revealed');
+
+                // If skill card, trigger progress bar width transition
+                if (entry.target.classList.contains('skill-card')) {
+                    const progressBar = entry.target.querySelector('.progress-bar');
+                    const level = entry.target.getAttribute('data-level');
+                    if (progressBar && level) {
+                        setTimeout(() => {
+                            progressBar.style.width = `${level}%`;
+                        }, 150);
+                    }
+                }
+            }
+        });
+    }, scrollRevealOptions);
+
+    document.querySelectorAll('.reveal-item').forEach(el => {
+        scrollRevealObserver.observe(el);
+    });
+
+    // ------------------------------------------
+    // 7. Lightbox Modal Certificate Actions
+    // ------------------------------------------
+    const modal = document.getElementById('certificateModal');
+    const modalImg = document.getElementById('modalImage');
+    const captionText = document.getElementById('caption');
+    const closeModal = document.querySelector('.close-modal');
+
+    function openModal(imgSrc, imgAlt) {
+        if (modal && modalImg && captionText) {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 20);
+            modalImg.src = imgSrc;
+            captionText.textContent = imgAlt;
+        }
+    }
+
+    function closeModalAndReset() {
+        if (modal) {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+    }
+
+    // Triggers
+    document.querySelectorAll('.certificate-image, .design-slide .design-image').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const img = el.querySelector('img');
+            if (img) {
+                openModal(img.src, img.alt || 'Visual Artifact Preview');
+            }
+        });
+    });
+
+    if (closeModal) {
+        closeModal.addEventListener('click', closeModalAndReset);
+    }
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('modal-wrapper')) {
+                closeModalAndReset();
+            }
+        });
+    }
+
+    // Keyboard ESC mapping
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModalAndReset();
+        }
+    });
+
+    // ------------------------------------------
+    // 8. Contact Form Submissions
+    // ------------------------------------------
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalHTML = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Sending Message...</span> <i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    alert('Thank you for reaching out! Your message was sent successfully.');
+                    contactForm.reset();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Something went wrong during delivery. Please try again later.');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalHTML;
+                    submitBtn.disabled = false;
+                });
+        });
+    }
+});
+
+// ------------------------------------------
+// 9. Premium Interactive Design Slide Showcase
+// ------------------------------------------
 let currentSlide = 0;
 const totalSlides = 13;
 let isTransitioning = false;
 
-// Design Showcase Functions
 function updateDesignCounter() {
-    document.getElementById('currentDesign').textContent = currentSlide + 1;
-    document.getElementById('totalDesigns').textContent = totalSlides;
+    const currentDesign = document.getElementById('currentDesign');
+    const totalDesigns = document.getElementById('totalDesigns');
+    if (currentDesign && totalDesigns) {
+        currentDesign.textContent = currentSlide + 1;
+        totalDesigns.textContent = totalSlides;
+    }
 }
 
 function updateIndicators() {
@@ -22,22 +643,23 @@ function showDesign(slideIndex) {
     isTransitioning = true;
 
     const slides = document.querySelectorAll('.design-slide');
+    if (slides.length === 0) return;
 
-    // Remove all active classes
+    // Remove active class from all
     slides.forEach(slide => {
-        slide.classList.remove('active', 'prev', 'next');
+        slide.classList.remove('active');
     });
 
-    // Set the active slide
+    // Set new active
     slides[slideIndex].classList.add('active');
 
-    // Update counter and indicators
+    // Update markers
     updateDesignCounter();
     updateIndicators();
 
     setTimeout(() => {
         isTransitioning = false;
-    }, 400);
+    }, 600);
 }
 
 function nextDesign() {
@@ -58,105 +680,7 @@ function goToDesign(slideIndex) {
     showDesign(currentSlide);
 }
 
-// Mobile navigation toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-}
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        if (navLinks) navLinks.classList.remove('active');
-    });
-});
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Form submission handling
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const btn = contactForm.querySelector('button[type="submit"]');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = 'Sending...';
-        btn.disabled = true;
-
-        const formData = new FormData(contactForm);
-
-        fetch(contactForm.action, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => {
-                alert('Thank you for your message! I will get back to you soon.');
-                contactForm.reset();
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('Something went wrong. Please try again later.');
-            })
-            .finally(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            });
-    });
-}
-
-// Enhanced scroll reveal animation with staggered effect
-window.addEventListener('scroll', revealOnScroll);
-
-function revealOnScroll() {
-    const skillCards = document.querySelectorAll('.skill-card');
-    const projectCards = document.querySelectorAll('.project-card');
-    const certificateCards = document.querySelectorAll('.certificate-card');
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    const aboutContent = document.querySelector('.about-content');
-    const contactElements = document.querySelectorAll('.contact-info, .contact-form');
-    const windowHeight = window.innerHeight;
-
-    // Function to handle reveal with delay
-    const revealWithDelay = (elements, baseDelay = 0) => {
-        elements.forEach((element, index) => {
-            const elementTop = element.getBoundingClientRect().top;
-            if (elementTop < windowHeight - 100) {
-                setTimeout(() => {
-                    element.classList.add('revealed');
-                }, baseDelay + (index * 100));
-            }
-        });
-    };
-
-    // Reveal different sections with appropriate delays
-    if (aboutContent && aboutContent.getBoundingClientRect().top < windowHeight - 100) {
-        aboutContent.classList.add('revealed');
-    }
-
-    revealWithDelay(timelineItems);
-    revealWithDelay(skillCards, 100);
-    revealWithDelay(certificateCards, 150);
-    revealWithDelay(projectCards, 200);
-    revealWithDelay(contactElements, 250);
-}
-
-// Keyboard navigation for design showcase
+// Keyboards and Swipe controls for slides
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
         previousDesign();
@@ -165,394 +689,202 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Touch/swipe support for design showcase
-let startX = 0;
-let endX = 0;
+// Touch controls for slides
+let startTouchX = 0;
+let endTouchX = 0;
 const designViewport = document.getElementById('designViewport');
 
 if (designViewport) {
     designViewport.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-    });
+        startTouchX = e.touches[0].clientX;
+    }, { passive: true });
 
     designViewport.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
+        endTouchX = e.changedTouches[0].clientX;
         handleSwipe();
-    });
+    }, { passive: true });
 }
 
 function handleSwipe() {
-    const swipeThreshold = 50;
-    const swipeDistance = startX - endX;
-
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-        if (swipeDistance > 0) {
-            nextDesign(); // Swipe left - next design
+    const threshold = 40;
+    const diff = startTouchX - endTouchX;
+    if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+            nextDesign(); // Swipe left -> Next
         } else {
-            previousDesign(); // Swipe right - previous design
+            previousDesign(); // Swipe right -> Prev
         }
     }
 }
 
-// Pause auto-play on hover
-const designViewer = document.querySelector('.design-viewer');
-let autoPlayInterval;
-const autoPlayDelay = 5000;
-
-function startAutoPlay() {
-    autoPlayInterval = setInterval(nextDesign, autoPlayDelay);
-}
-
-function stopAutoPlay() {
-    clearInterval(autoPlayInterval);
-}
-
-if (designViewer) {
-    designViewer.addEventListener('mouseenter', stopAutoPlay);
-    designViewer.addEventListener('mouseleave', startAutoPlay);
-}
-
-// DOM Content Loaded - Initialize everything
-document.addEventListener('DOMContentLoaded', () => {
-    // Add CSS classes for animation
-    const elements = document.querySelectorAll('.skill-card, .project-card, .certificate-card, .timeline-item, .about-content, .contact-info, .contact-form');
-    elements.forEach(element => {
-        element.classList.add('reveal-element');
-    });
-
-    // Initialize design showcase
-    updateDesignCounter();
-    updateIndicators();
-
-    // Start auto-play (optional)
-    // startAutoPlay();
-
-    // Add particle background effect to hero section
-    const hero = document.getElementById('hero');
-    if (hero) {
-        const particleContainer = document.createElement('div');
-        particleContainer.className = 'particles-container';
-        hero.appendChild(particleContainer);
-
-        // Create particles (CSS based)
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.cssText = `
-                position: absolute;
-                width: 3px;
-                height: 3px;
-                background-color: rgba(93, 93, 255, 0.5);
-                border-radius: 50%;
-                left: ${Math.random() * 100}%;
-                top: ${Math.random() * 100}%;
-                animation: float linear infinite ${3 + Math.random() * 7}s;
-                animation-delay: ${Math.random() * 5}s;
-            `;
-            particleContainer.appendChild(particle);
-        }
-    }
-
-    // Add typing effect to hero heading
-    const heroHeading = document.querySelector('#hero h1');
-    if (heroHeading) {
-        const text = heroHeading.textContent;
-        heroHeading.textContent = '';
-        heroHeading.style.cssText += `
-            border-right: 3px solid #00f0ff;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: cursor-blink 1s step-end infinite;
-        `;
-
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                heroHeading.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 100);
-            }
-        };
-
-        setTimeout(typeWriter, 500);
-    }
-
-    // Trigger initial check
-    revealOnScroll();
-
-    // Add dynamic styles for animations
-    const style = document.createElement('style');
-    style.textContent = `
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0) scale(1);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) scale(0);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes cursor-blink {
-            from, to { border-color: transparent }
-            50% { border-color: #00f0ff; }
-        }
-        
-        /* Additional hover effects */
-        .timeline-item:hover .timeline-dot {
-            transform: translate(-50%, -50%) scale(1.3);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.9);
-        }
-        
-        .certificate-card:hover .certificate-badge {
-            background: linear-gradient(45deg, rgba(0, 240, 255, 0.3), rgba(93, 93, 255, 0.3));
-            border-color: rgba(0, 240, 255, 0.5);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-        
-        .view-all-btn:active {
-            transform: translateY(-1px);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-        }
-        
-        @media (max-width: 768px) {
-            .timeline-content {
-                margin-left: 20px;
-            }
-            
-            .timeline-item .timeline-content::before {
-                content: '';
-                position: absolute;
-                left: -30px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 0;
-                height: 0;
-                border-right: 10px solid rgba(20, 20, 40, 0.8);
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // View All Certificates button action
-    document.querySelector('.view-all-btn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('This would open a dedicated certificates page or modal with all your certificates.');
-    });
-
-    // Intersection Observer
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-
-                // Animate progress bar if it's a skill card
-                if (entry.target.classList.contains('skill-card')) {
-                    const progressBar = entry.target.querySelector('.skill-progress-bar');
-                    const level = entry.target.getAttribute('data-level');
-                    if (progressBar && level) {
-                        setTimeout(() => {
-                            progressBar.style.width = level + '%';
-                        }, 200);
-                    }
-                }
-            }
-        });
-    }, observerOptions);
-
-    setTimeout(() => {
-        document.querySelectorAll('.reveal-element').forEach(el => {
-            observer.observe(el);
-        });
-    }, 100);
-
-    // Start particles
-    initParticles();
-
-    // Initialize Tilt
-    if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll(".skill-card, .project-card, .certificate-card, .timeline-content"), {
-            max: 15,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.2,
-            scale: 1.05
-        });
-    }
-
-    // Modal Functionality
-    const modal = document.getElementById('certificateModal');
-    const modalImg = document.getElementById('modalImage');
-    const captionText = document.getElementById('caption');
-    const closeModal = document.querySelector('.close-modal');
-
-    function openModal(imgSrc, imgAlt) {
-        if (modal) {
-            modal.style.display = "block";
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            modalImg.src = imgSrc;
-            captionText.innerHTML = imgAlt;
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    document.querySelectorAll('.certificate-image, .design-slide .design-image').forEach(wrapper => {
-        wrapper.addEventListener('click', function (e) {
-            e.stopPropagation();
-            const img = this.querySelector('img');
-            if (img) openModal(img.src, img.alt);
-        });
-    });
-
-    if (closeModal) {
-        closeModal.addEventListener('click', () => {
-            closeModalAndReset();
-        });
-    }
-
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalAndReset();
-            }
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "Escape" && modal && modal.style.display === "block") {
-            closeModalAndReset();
-        }
-    });
-
-    function closeModalAndReset() {
-        if (modal) {
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = "none";
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-    }
-});
-
-// Particle Background Animation
+// ------------------------------------------
+// 10. Interactive Cosmic Nebula Background Mechanics
+// ------------------------------------------
 const canvas = document.getElementById('particles-canvas');
-let ctx;
-let particlesArray;
-
 if (canvas) {
-    ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+    let animationFrameId = null;
+    
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    // Prismatic Color Palette matching the Luxury brand theme
+    const palette = [
+        { r: 139, g: 92, b: 246, hex: '#8B5CF6' }, // Prismatic Violet
+        { r: 20, g: 184, b: 166, hex: '#14B8A6' }, // Holographic Teal
+        { r: 217, g: 70, b: 239, hex: '#D946EF' }  // Cyber Magenta
+    ];
 
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         initParticles();
     });
-}
 
-class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
-        this.x = x;
-        this.y = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.size = size;
-        this.color = color;
-    }
-    draw() {
-        if (!ctx) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = '#00f0ff';
-        ctx.fill();
-    }
-    update() {
-        if (!canvas) return;
-        if (this.x > canvas.width || this.x < 0) {
-            this.directionX = -this.directionX;
+    class Particle {
+        constructor(x, y, size) {
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            
+            // Flow field drift waves
+            this.angle = Math.random() * Math.PI * 2;
+            this.angleSpeed = Math.random() * 0.015 - 0.0075;
+            
+            // Inertial velocities
+            this.vx = (Math.random() * 0.2) - 0.1;
+            this.vy = (Math.random() * 0.2) - 0.1;
+            
+            // Pulsing node configurations
+            this.pulsePhase = Math.random() * Math.PI * 2;
+            this.pulseSpeed = 0.005 + Math.random() * 0.01;
+            
+            // Assigned core brand color
+            this.colorConfig = palette[Math.floor(Math.random() * palette.length)];
         }
-        if (this.y > canvas.height || this.y < 0) {
-            this.directionY = -this.directionY;
+
+        draw() {
+            this.pulsePhase += this.pulseSpeed;
+            const pulseSize = this.size + Math.sin(this.pulsePhase) * 1.2;
+            
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, Math.max(0.5, pulseSize), 0, Math.PI * 2, false);
+            
+            // High-end radial glow rendering for cosmic star atmosphere
+            const glow = ctx.createRadialGradient(
+                this.x, this.y, Math.max(0.1, pulseSize * 0.1),
+                this.x, this.y, Math.max(1, pulseSize * 2.8)
+            );
+            glow.addColorStop(0, `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.75)`);
+            glow.addColorStop(0.25, `rgba(${this.colorConfig.r}, ${this.colorConfig.g}, ${this.colorConfig.b}, 0.3)`);
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            ctx.fillStyle = glow;
+            ctx.fill();
         }
-        this.x += this.directionX;
-        this.y += this.directionY;
-        this.draw();
+
+        update() {
+            // 1. Fluid flow drift current logic
+            this.angle += this.angleSpeed;
+            const flowX = Math.sin(this.angle) * 0.035;
+            const flowY = Math.cos(this.angle) * 0.035;
+            
+            this.vx += flowX;
+            this.vy += flowY;
+
+            // 2. Gravitational cursor attraction & orbital swirl simulation
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 280) {
+                const pull = (280 - distance) / 280 * 0.07;
+                
+                // Perpendicular vector for premium swirl inertia!
+                const swirlX = -dy / distance;
+                const swirlY = dx / distance;
+                
+                this.vx += (dx / distance) * pull * 0.35 + swirlX * pull * 0.65;
+                this.vy += (dy / distance) * pull * 0.35 + swirlY * pull * 0.65;
+            }
+
+            // 3. Absolute speed limits to keep transition movements fluid and sleek
+            const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+            const speedLimit = 0.75;
+            if (speed > speedLimit) {
+                this.vx = (this.vx / speed) * speedLimit;
+                this.vy = (this.vy / speed) * speedLimit;
+            }
+
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // 4. Wrap elements inside canvas borders seamlessly
+            if (this.x < 0) this.x = canvas.width;
+            else if (this.x > canvas.width) this.x = 0;
+            
+            if (this.y < 0) this.y = canvas.height;
+            else if (this.y > canvas.height) this.y = 0;
+
+            this.draw();
+        }
     }
-}
 
-function initParticles() {
-    if (!canvas) return;
-    particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 9000;
-    for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 1;
-        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-        let directionX = (Math.random() * 0.4) - 0.2;
-        let directionY = (Math.random() * 0.4) - 0.2;
-        let color = '#00C4CC';
+    function initParticles() {
+        particlesArray = [];
+        const area = canvas.width * canvas.height;
+        const numberOfParticles = Math.min(50, Math.floor(area / 24000));
+        
+        for (let i = 0; i < numberOfParticles; i++) {
+            const size = Math.random() * 3 + 2.5; // Slightly larger stars for luxury glow look
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
 
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            particlesArray.push(new Particle(x, y, size));
+        }
     }
-    animateParticles();
-}
 
-function connect() {
-    if (!canvas || !particlesArray) return;
-    let opacityValue = 1;
-    for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a; b < particlesArray.length; b++) {
-            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-            if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                opacityValue = 1 - (distance / 20000);
-                if (opacityValue > 0) {
-                    ctx.strokeStyle = 'rgba(0, 240, 255,' + opacityValue + ')';
-                    ctx.lineWidth = 1;
+    function connectParticles() {
+        const maxDist = 120;
+        const maxDistSq = maxDist * maxDist;
+        const len = particlesArray.length;
+        
+        for (let a = 0; a < len; a++) {
+            const pA = particlesArray[a];
+            for (let b = a + 1; b < len; b++) {
+                const pB = particlesArray[b];
+                const dx = pA.x - pB.x;
+                const dy = pA.y - pB.y;
+                const distSq = (dx * dx) + (dy * dy);
+                
+                if (distSq < maxDistSq) {
+                    const dist = Math.sqrt(distSq);
+                    const opacity = (1 - (dist / maxDist)) * 0.24;
+                    
+                    // Create gorgeous color-shifting gradients connecting neighboring star systems
+                    const grad = ctx.createLinearGradient(pA.x, pA.y, pB.x, pB.y);
+                    grad.addColorStop(0, `rgba(${pA.colorConfig.r}, ${pA.colorConfig.g}, ${pA.colorConfig.b}, ${opacity})`);
+                    grad.addColorStop(1, `rgba(${pB.colorConfig.r}, ${pB.colorConfig.g}, ${pB.colorConfig.b}, ${opacity})`);
+                    
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = 1.2;
                     ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                    ctx.moveTo(pA.x, pA.y);
+                    ctx.lineTo(pB.x, pB.y);
                     ctx.stroke();
                 }
             }
         }
     }
-}
 
-function animateParticles() {
-    if (!canvas) return;
-    requestAnimationFrame(animateParticles);
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(p => p.update());
+        connectParticles();
+        animationFrameId = requestAnimationFrame(animateParticles);
     }
-    connect();
+
+    initParticles();
+    animateParticles();
 }

@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midhun Jomi C</title>
-    <!-- Google Fonts for futuristic design -->
+    <title>Midhun Jomi C | UI/UX Designer & App Developer</title>
     <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Google Fonts for Modern, High-End Design -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Open Graph / Facebook -->
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Open Graph / Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://midhun-jomi.github.io/Portfolio/">
     <meta property="og:title" content="Midhun Jomi C - UI/UX Designer & Developer">
@@ -30,503 +33,726 @@
         content="Portfolio of Midhun Jomi C, a UI/UX Designer and App Developer specializing in futuristic and user-centric digital experiences.">
     <meta property="twitter:image" content="https://midhun-jomi.github.io/Portfolio/images/Profile.JPG">
 
+    <!-- Custom Premium Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Header with navigation -->
+    <!-- Luxury Cinematic Interactive Preloader & Sci-Fi HUD Portal V3.0 -->
+    <div id="preloader" class="preloader-overlay">
+        <!-- Expanding circular ripple shockwave -->
+        <div class="preloader-shockwave" id="preloaderShockwave"></div>
+        
+        <!-- Interactive cyber sparks canvas -->
+        <canvas id="preloaderSparksCanvas" class="preloader-canvas-overlay"></canvas>
+        
+        <!-- Retro CRT scanlines overlay -->
+        <div class="preloader-scanlines"></div>
+
+        <div class="preloader-content" id="preloaderHUD">
+            <!-- 3D Perspective wrapper for concentric gyroscope rings -->
+            <div class="preloader-perspective-wrapper">
+                <div class="preloader-logo-container" id="preloaderLogoContainer">
+                    <!-- SVG Loading Ring bordering the HUD outer ring -->
+                    <svg class="preloader-svg-progress" viewBox="0 0 160 160">
+                        <circle class="svg-track" cx="80" cy="80" r="74"></circle>
+                        <circle class="svg-bar" id="preloaderSVGBar" cx="80" cy="80" r="74"></circle>
+                    </svg>
+
+                    <div class="preloader-hud-ring ring-outer" id="hudOuter"></div>
+                    <div class="preloader-hud-ring ring-middle" id="hudMiddle"></div>
+                    <div class="preloader-hud-ring ring-inner" id="hudInner"></div>
+                    <div class="preloader-glow-core" id="hudCore"></div>
+                    <span class="preloader-logo" id="hudLogo">MJ</span>
+                </div>
+            </div>
+            
+            <div class="preloader-progress-container">
+                <div class="preloader-progress-track">
+                    <div class="preloader-progress-bar" id="preloaderProgressBar"></div>
+                </div>
+                <div class="preloader-status">
+                    <span class="preloader-status-text" id="preloaderStatusText">INITIALIZING SYSTEM CORES</span>
+                    <span class="preloader-percent" id="preloaderPercent">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monospace diagnostic boot console logs -->
+        <div class="preloader-terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot"></span>
+                <span class="terminal-title">SYSTEM_BOOT_LOG_V3.0</span>
+            </div>
+            <div class="terminal-body" id="preloaderTerminal">
+                <div class="terminal-line">&gt; ESTABLISHING CORE QUANTUM ENGINE...</div>
+            </div>
+        </div>
+
+        <!-- Dynamic neon soundwave equalizer visualizer -->
+        <div class="preloader-equalizer">
+            <div class="eq-bar bar-1"></div>
+            <div class="eq-bar bar-2"></div>
+            <div class="eq-bar bar-3"></div>
+            <div class="eq-bar bar-4"></div>
+            <div class="eq-bar bar-5"></div>
+            <div class="eq-bar bar-6"></div>
+            <div class="eq-bar bar-7"></div>
+            <div class="eq-bar bar-8"></div>
+        </div>
+    </div>
+
+    <!-- Fluid Magnetic Custom Cursor -->
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+    <div class="custom-cursor-glow" id="customCursorGlow"></div>
+
+    <!-- Atmospheric Background Ambient Lights -->
+    <div class="background-glow-orbs">
+        <div class="glow-orb orb-primary"></div>
+        <div class="glow-orb orb-secondary"></div>
+        <div class="glow-orb orb-tertiary"></div>
+    </div>
+
+    <!-- Interactive Grid Canvas Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Header Navigation -->
     <header>
-        <nav>
-            <div class="logo">MJ</div>
+        <nav class="nav-container">
+            <div class="logo">
+                <span class="logo-text">MJ</span>
+                <span class="logo-dot"></span>
+            </div>
             <ul class="nav-links">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#certificates">Certificates</a></li>
-                <li><a href="#designs">Designs</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#hero" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#experience" class="nav-item">Experience</a></li>
+                <li><a href="#skills" class="nav-item">Skills</a></li>
+                <li><a href="#certificates" class="nav-item">Certificates</a></li>
+                <li><a href="#designs" class="nav-item">Designs</a></li>
+                <li><a href="#projects" class="nav-item">Projects</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
             </ul>
             <div class="hamburger">
-                <i class="fas fa-bars"></i>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </nav>
     </header>
 
-    <canvas id="particles-canvas"></canvas>
-
     <main>
-        <!-- Hero section -->
-        <section id="hero">
-            <h1>Hi, I'm <span class="highlight">Midhun Jomi C</span></h1>
-            <p>UI/UX designer & App Developer</p>
-            <a href="#contact" class="btn">Get In Touch</a>
+        <!-- Immersive Hero Section -->
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1 class="reveal-item">Hi, I'm <span class="highlight">Midhun Jomi C</span></h1>
+                <p class="hero-subtitle reveal-item">UI/UX Designer & App Developer</p>
+                <p class="hero-description reveal-item">Crafting premium, intuitive, and award-winning digital
+                    experiences that blend high-end design aesthetics with robust developer engineering.</p>
+                <div class="hero-ctas reveal-item">
+                    <a href="#contact" class="btn btn-primary magnetic-btn">Get In Touch</a>
+                    <a href="#projects" class="btn btn-secondary magnetic-btn">View My Work</a>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator">
+                <div class="mouse-icon">
+                    <div class="wheel"></div>
+                </div>
+                <span>Scroll Down</span>
+            </div>
         </section>
 
-        <!-- About section -->
-        <section id="about">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="images/Profile3.JPG" alt="Profile Picture">
+        <!-- Bento Grid About Section -->
+        <section id="about" class="about-section">
+            <h2 class="section-title">About Me</h2>
+            <div class="bento-grid">
+                <!-- Profile Image Bento Card -->
+                <div class="bento-card card-profile reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="profile-image-container">
+                        <img src="images/Profile3.JPG" alt="Midhun Jomi C" loading="lazy" decoding="async">
+                    </div>
                 </div>
-                <div class="about-text">
-                    <h3>UI/UX designer & App Developer</h3>
-                    <p>I'm Midhun Jomi C, a B.Tech Computer Science and Engineering student with a passion for
-                        technology, design, and innovation. I enjoy building impactful solutions—whether it's developing
-                        mobile apps, designing intuitive interfaces, or creating digital content that connects with
-                        people.</p>
-                    <p>I've worked on projects ranging from RideSafe, a smart bike safety add-on, to LifeLinks, a blood
-                        donation platform aimed at saving lives in my community. I'm also exploring offline
-                        communication networks for disaster zones through my main project, DisasterLink.</p>
-                    <p>Beyond academics, I've led media and digital campaigns as Head of Digital Media at PACE Lab and
-                        Chairman of CSI SJCET, while actively contributing to societies such as IEEE, UiPath, and ASME.
-                        My work has earned recognition, including winning a prize in the Red Hat Academy India Challenge
-                        2024.</p>
-                    <a href="Midhun_Jomi_C.pdf" class="btn" download>Download CV</a>
+
+                <!-- Main Bio Bento Card -->
+                <div class="bento-card card-bio reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="bento-tag">Intro</div>
+                        <h3>Bridging the Gap Between Code & Creative Design</h3>
+                        <p>I'm a B.Tech Computer Science and Engineering student at SJCET with a deep-seated passion for
+                            technology, design, and product innovation. I specialize in building impactful digital
+                            interfaces that connect with people on an emotional and functional level.</p>
+                        <p>My work ranges from designing mobile applications for early-stage startups to pioneering
+                            DisasterLink—an offline communication network designed for active search-and-rescue teams
+                            and disaster response squads.</p>
+                        <div class="bento-actions">
+                            <a href="Midhun_Jomi_C.pdf" class="btn btn-secondary btn-small" download>
+                                <i class="fas fa-file-pdf"></i> Download CV
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work Experience Bento Card -->
+                <div class="bento-card card-achievements reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="bento-tag">Experience</div>
+                        <h3>Professional Journey</h3>
+                        <p>Currently engineering solutions at <strong>TenX Technologies</strong>, with a track record of driving technical innovation across organizations:</p>
+                        <div class="badge-cloud">
+                            <span class="pill-badge active-company"><i class="fas fa-circle-play fa-fade" style="color: var(--accent-teal);"></i> TenX Technologies</span>
+                            <span class="pill-badge"><i class="fas fa-laptop-code"></i> Priminent</span>
+                            <span class="pill-badge"><i class="fas fa-flask"></i> PACE Lab</span>
+                            <span class="pill-badge"><i class="fas fa-rocket"></i> Findastartup</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Affiliations & Leadership Bento Card -->
+                <div class="bento-card card-affiliations reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="bento-tag">Leadership</div>
+                        <h3>Impact & Community Drive</h3>
+                        <p>Beyond academic boundaries, I lead major student technical communities and orchestrate
+                            digital campaigns:</p>
+                        <div class="badge-cloud">
+                            <span class="pill-badge"><i class="fas fa-chair"></i> Chairman, CSI SJCET</span>
+                            <span class="pill-badge"><i class="fas fa-photo-film"></i> Head of Digital Media, PACE
+                                Lab</span>
+                            <span class="pill-badge"><i class="fab fa-unity"></i> Media & Marketing, UiPath SJCET</span>
+                            <span class="pill-badge"><i class="fas fa-microchip"></i> Active Member, IEEE</span>
+                            <span class="pill-badge"><i class="fas fa-gear"></i> Member, ASME</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience Timeline section -->
-        <section id="experience">
-            <h2>Experience</h2>
+        <!-- Experience Timeline Section -->
+        <section id="experience" class="experience-section">
+            <h2 class="section-title">Professional Journey</h2>
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025 - Present</div>
-                        <div class="timeline-title">Chairman</div>
-                        <div class="timeline-company">CSI SJCET Chapter</div>
-                        <div class="timeline-description">
-                            Served as Chairman of the Computer Society of India chapter at SJCET. Organized technical
-                            workshops, coding competitions, and seminars. Led a team of 50+ members and coordinated
-                            various tech events and knowledge sharing sessions.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2026 - Present</span>
+                            <h3 class="timeline-title">Backend Developer</h3>
+                            <h4 class="timeline-company">TenX Technologies</h4>
                         </div>
+                        <p class="timeline-desc">Engineering robust backend architectures, designing RESTful APIs, and designing server logic. Scaling database queries, improving service response latency, and deploying secure cloud instances.
+                        </p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025- Present</div>
-                        <div class="timeline-title">UI/UX Design Intern</div>
-                        <div class="timeline-company">FindAStartup</div>
-                        <div class="timeline-description">
-                            Worked on designing user interfaces for mobile applications and web platforms. Created
-                            wireframes, prototypes, and conducted user research. Collaborated with development teams to
-                            ensure seamless implementation of designs.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2025 - 2026</span>
+                            <h3 class="timeline-title">Chairman</h3>
+                            <h4 class="timeline-company">CSI SJCET Chapter</h4>
                         </div>
+                        <p class="timeline-desc">Elected as Chairman of the Computer Society of India chapter at SJCET.
+                            Managing technical workshops, competitive coding environments, and guest seminars.
+                            Coordinating a cross-functional leadership team of 50+ members to guide tech initiatives.
+                        </p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025 - Present</div>
-                        <div class="timeline-title">Digital Media & Marketing</div>
-                        <div class="timeline-company">FindAStartup</div>
-                        <div class="timeline-description">
-                            Leading digital media strategies, content creation, and managing social media campaigns for
-                            FindAStartup. Responsible for designing impactful visual content and driving brand
-                            engagement through innovative digital marketing and community outreach initiatives.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2025 - 2026</span>
+                            <h3 class="timeline-title">UI/UX Design Intern</h3>
+                            <h4 class="timeline-company">FindAStartup</h4>
                         </div>
+                        <p class="timeline-desc">Designing native mobile applications and responsive SaaS web
+                            dashboards. Creating robust high-fidelity wireframes, interactive user flows, and conducting
+                            user interviews. Collaborating with engineers to ensure pixel-perfect deployment.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025 - Present</div>
-                        <div class="timeline-title">Media & Marketing</div>
-                        <div class="timeline-company">UiPath SJCET</div>
-                        <div class="timeline-description">
-                            Leading marketing strategies, content creation, and promotional campaigns for UiPath
-                            initiatives. Responsible for creating engaging digital content, enhancing brand visibility,
-                            and fostering community engagement through innovative marketing approaches.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2025 - 2026</span>
+                            <h3 class="timeline-title">Digital Media & Marketing</h3>
+                            <h4 class="timeline-company">FindAStartup</h4>
                         </div>
+                        <p class="timeline-desc">Spearheading visual digital campaigns, brand storytelling, and
+                            user-growth outreach. Elevating the startup portal's social presence and building an active,
+                            highly engaged developer/founder ecosystem.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">May-July 2025</div>
-                        <div class="timeline-title">Head of Digital Media</div>
-                        <div class="timeline-company">Pace Lab</div>
-                        <div class="timeline-description">
-                            Leading digital media strategies, content creation, and managing social media campaigns for
-                            PACE Lab. Responsible for creating engaging visual content and increasing online presence
-                            through innovative digital marketing techniques.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2025 - 2026</span>
+                            <h3 class="timeline-title">Media & Marketing</h3>
+                            <h4 class="timeline-company">UiPath SJCET</h4>
                         </div>
+                        <p class="timeline-desc">Leading event promotional campaigns, crafting premium technical assets,
+                            and designing media releases to introduce robotic process automation (RPA) tools and
+                            resources to engineering graduates.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2024 - 2025</div>
-                        <div class="timeline-title">Co Lead Media Team</div>
-                        <div class="timeline-company">CSI SJCET Chapter</div>
-                        <div class="timeline-description">
-                            Co-leading the media team of CSI SJCET Chapter, overseeing digital media strategies, event
-                            promotions, and content creation. Responsible for designing engaging visuals, managing
-                            social media presence, and supporting chapter initiatives through creative digital
-                            campaigns.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">May - July 2025</span>
+                            <h3 class="timeline-title">Head of Digital Media</h3>
+                            <h4 class="timeline-company">PACE Lab</h4>
                         </div>
+                        <p class="timeline-desc">Directed social media architectures, online branding campaigns, and
+                            marketing structures for PACE Lab. Designed highly polished graphics and visual
+                            communications to enhance industry outreach.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item">
+                <div class="timeline-item reveal-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2023-2024</div>
-                        <div class="timeline-title">Media Coordinator</div>
-                        <div class="timeline-company">CSI SJCET Chapter</div>
-                        <div class="timeline-description">
-                            Coordinating media activities for CSI SJCET Chapter, managing content creation, event
-                            coverage, and social media campaigns. Responsible for producing engaging visuals,
-                            maintaining the chapter's online presence, and supporting promotional initiatives through
-                            creative digital strategies.
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2024 - 2025</span>
+                            <h3 class="timeline-title">Co-Lead Media Team</h3>
+                            <h4 class="timeline-company">CSI SJCET Chapter</h4>
                         </div>
+                        <p class="timeline-desc">Directed digital media content schedules and graphic layouts for CSI
+                            chapters. Designed high-impact promotional collateral for institutional coding conventions
+                            and hackathons.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <div class="card-glow"></div>
+                        <div class="timeline-header">
+                            <span class="timeline-year">2023 - 2024</span>
+                            <h3 class="timeline-title">Media Coordinator</h3>
+                            <h4 class="timeline-company">CSI SJCET Chapter</h4>
+                        </div>
+                        <p class="timeline-desc">Created the core aesthetic system and managed event photography/digital
+                            marketing campaigns for regional collegiate tech meetups.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills section -->
-        <section id="skills">
-            <h2>My Skills</h2>
-            <div class="skills-container">
-                <div class="skill-card" data-level="95">
-                    <i class="fab fa-html5"></i>
+        <!-- Technical Skills Section -->
+        <section id="skills" class="skills-section">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="skills-grid">
+                <!-- HTML5 -->
+                <div class="skill-card reveal-item" data-level="95">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
                     <h3>HTML5</h3>
-                    <div class="skill-level-text">
+                    <div class="skill-meta">
                         <span>Proficiency</span>
-                        <span class="skill-percent">95%</span>
+                        <span class="percent">95%</span>
                     </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
                     </div>
-                    <p>Semantic markup, accessibility, and modern HTML practices.</p>
-                </div>
-                <div class="skill-card" data-level="90">
-                    <i class="fab fa-css3-alt"></i>
-                    <h3>CSS3</h3>
-                    <div class="skill-level-text">
-                        <span>Proficiency</span>
-                        <span class="skill-percent">90%</span>
-                    </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
-                    </div>
-                    <p>Responsive design, animations, and CSS frameworks.</p>
-                </div>
-                <div class="skill-card" data-level="85">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="64" height="64"
-                        style="background:#00e5ff; border-radius:8px; padding:10px;">
-                        <path fill="#0ACF83"
-                            d="M45 128c9.94 0 18-8.06 18-18V92H45c-9.94 0-18 8.06-18 18s8.06 18 18 18z" />
-                        <path fill="#A259FF" d="M27 74c0 9.94 8.06 18 18 18h18V56H45c-9.94 0-18 8.06-18 18z" />
-                        <path fill="#F24E1E" d="M27 38c0 9.94 8.06 18 18 18h18V20H45c-9.94 0-18 8.06-18 18z" />
-                        <path fill="#FF7262" d="M63 0H45v38h18c9.94 0 18-8.06 18-18S72.94 0 63 0z" />
-                        <path fill="#1ABCFE"
-                            d="M99 38c0-9.94-8.06-18-18-18S63 28.06 63 38s8.06 18 18 18 18-8.06 18-18z" />
-                    </svg>
-                    <h3>Figma</h3>
-                    <div class="skill-level-text">
-                        <span>Proficiency</span>
-                        <span class="skill-percent">85%</span>
-                    </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
-                    </div>
-                    <p>UI/UX design, prototyping, and collaborative interface creation.</p>
+                    <p>Building highly accessible, semantic, and SEO-optimized structures for modern web applications.
+                    </p>
                 </div>
 
-                <div class="skill-card" data-level="80">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="64" height="64"
-                        style="background:#00e5ff; border-radius:8px; padding:10px;">
-                        <path fill="#02569B" d="M64 0L0 64l16 16L96 0H64zM64 48L32 80l16 16 48-48H64z" />
-                        <path fill="#0175C2" d="M48 96l16 16h32L64 80z" />
-                        <path fill="#13B9FD" d="M96 0L48 48h32l48-48z" />
-                    </svg>
+                <!-- CSS3 -->
+                <div class="skill-card reveal-item" data-level="90">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h3>CSS3</h3>
+                    <div class="skill-meta">
+                        <span>Proficiency</span>
+                        <span class="percent">90%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <p>Crafting gorgeous responsive designs, advanced CSS layouts, hardware-accelerated animations, and
+                        responsive grids.</p>
+                </div>
+
+                <!-- Figma -->
+                <div class="skill-card reveal-item" data-level="85">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="48" height="48">
+                            <path fill="#0ACF83"
+                                d="M45 128c9.94 0 18-8.06 18-18V92H45c-9.94 0-18 8.06-18 18s8.06 18 18 18z" />
+                            <path fill="#A259FF" d="M27 74c0 9.94 8.06 18 18 18h18V56H45c-9.94 0-18 8.06-18 18z" />
+                            <path fill="#F24E1E" d="M27 38c0 9.94 8.06 18 18 18h18V20H45c-9.94 0-18 8.06-18 18z" />
+                            <path fill="#FF7262" d="M63 0H45v38h18c9.94 0 18-8.06 18-18S72.94 0 63 0z" />
+                            <path fill="#1ABCFE"
+                                d="M99 38c0-9.94-8.06-18-18-18S63 28.06 63 38s8.06 18 18 18 18-8.06 18-18z" />
+                        </svg>
+                    </div>
+                    <h3>Figma</h3>
+                    <div class="skill-meta">
+                        <span>Proficiency</span>
+                        <span class="percent">85%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <p>Designing modern design systems, fluid responsive components, advanced interactive prototyping,
+                        and beautiful user interfaces.</p>
+                </div>
+
+                <!-- Flutter -->
+                <div class="skill-card reveal-item" data-level="80">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="48" height="48">
+                            <path fill="#02569B" d="M64 0L0 64l16 16L96 0H64zM64 48L32 80l16 16 48-48H64z" />
+                            <path fill="#0175C2" d="M48 96l16 16h32L64 80z" />
+                            <path fill="#13B9FD" d="M96 0L48 48h32l48-48z" />
+                        </svg>
+                    </div>
                     <h3>Flutter</h3>
-                    <div class="skill-level-text">
+                    <div class="skill-meta">
                         <span>Proficiency</span>
-                        <span class="skill-percent">80%</span>
+                        <span class="percent">80%</span>
                     </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
                     </div>
-                    <p>Cross-platform app development with Dart and responsive UI design.</p>
+                    <p>Developing high-performance, cross-platform Android and iOS mobile applications utilizing Dart
+                        and BLoC pattern.</p>
                 </div>
-                <!-- Node.js Skill -->
-                <div class="skill-card" data-level="75">
-                    <i class="fab fa-node-js"></i>
+
+                <!-- Node.js -->
+                <div class="skill-card reveal-item" data-level="75">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <i class="fab fa-node-js"></i>
+                    </div>
                     <h3>Node.js</h3>
-                    <div class="skill-level-text">
+                    <div class="skill-meta">
                         <span>Proficiency</span>
-                        <span class="skill-percent">75%</span>
+                        <span class="percent">75%</span>
                     </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
                     </div>
-                    <p>Backend development, server-side logic, and scalable network applications.</p>
+                    <p>Constructing scalable server-side systems, RESTful API structures, and efficient backends with
+                        Express.</p>
                 </div>
-                <!-- Canva Skill -->
-                <div class="skill-card" data-level="90">
-                    <svg role="img" viewBox="0 0 24 24" width="64" height="64" xmlns="http://www.w3.org/2000/svg"
-                        style="background:#00C4CC; border-radius:8px; padding:10px;">
-                        <title>Canva</title>
-                        <circle cx="12" cy="12" r="12" fill="#FFFFFF" />
-                        <path fill="#00C4CC"
-                            d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM6.962 7.68c.754 0 1.337.549 1.405 1.2.069.583-.171 1.097-.822 1.406-.343.171-.48.172-.549.069-.034-.069 0-.137.069-.206.617-.514.617-.926.548-1.508-.034-.378-.308-.618-.583-.618-1.2 0-2.914 2.674-2.674 4.629.103.754.549 1.646 1.509 1.646.308 0 .65-.103.96-.24.5-.264.799-.47 1.097-.8-.073-.885.704-2.046 1.851-2.046.515 0 .926.205.96.583.068.514-.377.582-.514.582s-.378-.034-.378-.17c-.034-.138.309-.07.275-.378-.035-.206-.24-.274-.446-.274-.72 0-1.131.994-1.029 1.611.035.275.172.549.447.549.205 0 .514-.31.617-.755.068-.308.343-.514.583-.514.102 0 .17.034.205.171v.138c-.034.137-.137.548-.102.651 0 .069.034.171.17.171.092 0 .436-.18.777-.459.117-.59.253-1.298.253-1.357.034-.24.137-.48.617-.48.103 0 .171.034.205.171v.138l-.136.617c.445-.583 1.097-.994 1.508-.994.172 0 .309.102.309.274 0 .103 0 .274-.069.446-.137.377-.309.96-.412 1.474 0 .137.035.274.207.274.171 0 .685-.206 1.096-.754l.007-.004c-.002-.068-.007-.134-.007-.202 0-.411.035-.754.104-.994.068-.274.411-.514.617-.514.103 0 .205.069.205.171 0 .035 0 .103-.034.137-.137.446-.24.857-.24 1.269 0 .24.034.582.102.788 0 .034.035.069.07.069.068 0 .548-.445.89-1.028-.308-.206-.48-.549-.48-.96 0-.72.446-1.097.858-1.097.343 0 .617.24.617.72 0 .308-.103.65-.274.96h.102a.77.77 0 0 0 .584-.24.293.293 0 0 1 .134-.117c.335-.425.83-.74 1.41-.74.48 0 .924.205.959.582.068.515-.378.618-.515.618l-.002-.002c-.138 0-.377-.035-.377-.172 0-.137.309-.068.274-.376-.034-.206-.24-.275-.446-.275-.686 0-1.13.891-1.028 1.611.034.275.171.583.445.583.206 0 .515-.308.652-.754.068-.274.343-.514.583-.514.103 0 .17.034.205.171 0 .069 0 .206-.137.652-.17.308-.171.48-.137.617.034.274.171.48.309.583.034.034.068.102.068.102 0 .069-.034.138-.137.138-.034 0-.068 0-.103-.035-.514-.205-.72-.548-.789-.891-.205.24-.445.377-.72.377-.445 0-.89-.411-.96-.926a1.609 1.609 0 0 1 .075-.649c-.203.13-.422.203-.623.203h-.17c-.447.652-.927 1.098-1.27 1.303a.896.896 0 0 1-.377.104c-.068 0-.171-.035-.205-.104-.095-.152-.156-.392-.193-.667-.481.527-1.145.805-1.453.805-.343 0-.548-.206-.582-.55v-.376c.102-.754.377-1.2.377-1.337a.074.074 0 0 0-.069-.07c-.24 0-1.028.824-1.166 1.373l-.103.445c-.068.309-.377.515-.582.515-.103 0-.172-.035-.206-.172v-.137l.046-.233c-.435.31-.87.508-1.075.508-.308 0-.48-.172-.514-.412-.206.274-.445.412-.754.412-.352 0-.696-.24-.862-.593-.244.275-.523.553-.852.764-.48.309-1.028.549-1.68.549-.582 0-1.097-.309-1.371-.583-.412-.377-.651-.96-.686-1.509-.205-1.68.823-3.84 2.4-4.8.378-.205.755-.343 1.132-.343zm9.77 3.291c-.104 0-.172.172-.172.343 0 .274.137.583.309.755a1.74 1.74 0 0 0 .102-.583c0-.343-.137-.515-.24-.515z" />
-                    </svg>
-                    <h3>Canva</h3>
-                    <div class="skill-level-text">
+
+                <!-- Canva -->
+                <div class="skill-card reveal-item" data-level="90">
+                    <div class="card-glow"></div>
+                    <div class="skill-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Canva & Brand Identity</h3>
+                    <div class="skill-meta">
                         <span>Proficiency</span>
-                        <span class="skill-percent">90%</span>
+                        <span class="percent">90%</span>
                     </div>
-                    <div class="skill-progress-container">
-                        <div class="skill-progress-bar"></div>
+                    <div class="progress-track">
+                        <div class="progress-bar"></div>
                     </div>
-                    <p>Graphic design, visual content creation, and brand identity management.</p>
+                    <p>Managing extensive digital campaigns, corporate layouts, social media visual guides, and creative
+                        branding assets.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Certificates section -->
-        <section id="certificates">
-            <h2>Certificates</h2>
+        <!-- Certificates Section -->
+        <section id="certificates" class="certificates-section">
+            <h2 class="section-title">Certifications & Awards</h2>
             <div class="certificates-grid">
-                <div class="certificate-card">
+                <!-- Red Hat -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
-                        <img src="images/red3.jpg" alt="Red Hat Certificate">
-                        <div class="certificate-overlay"></div>
+                        <img src="images/red3.jpg" alt="Red Hat Academy India Challenge 2024" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">Red Hat Academy India Challenge 2024</div>
-                        <div class="certificate-issuer">Red Hat Academy</div>
-                        <div class="certificate-date">December 2024</div>
-                        <div class="certificate-badge">Winner</div>
+                        <span class="certificate-badge winner">Winner</span>
+                        <h3 class="certificate-title">Red Hat Academy India Challenge 2024</h3>
+                        <p class="certificate-issuer">Red Hat Academy</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> December 2024</p>
                     </div>
                 </div>
 
-                <div class="certificate-card">
+                <!-- Google Cloud -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
                         <img src="images/Google Cloud Career Launchpad Certificate - j7kpoGGe - Midhun Jomi C_page-0001.jpg"
-                            alt="Google Cloud Certificate">
-                        <div class="certificate-overlay"></div>
+                            alt="Google Cloud Career Launchpad" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">Google Cloud Career Launchpad</div>
-                        <div class="certificate-issuer">Google</div>
-                        <div class="certificate-date">August 2024</div>
-                        <div class="certificate-badge">Certified</div>
+                        <span class="certificate-badge">Certified</span>
+                        <h3 class="certificate-title">Google Cloud Career Launchpad</h3>
+                        <p class="certificate-issuer">Google</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> August 2024</p>
                     </div>
                 </div>
 
-                <div class="certificate-card">
+                <!-- Pace Lab -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
-                        <img src="images/pacelab.png" alt="Digital Marketing Certificate">
-                        <div class="certificate-overlay"></div>
+                        <img src="images/pacelab.png" alt="Digital Marketing Professional" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">Digital Marketing Professional</div>
-                        <div class="certificate-issuer">Pace Lab</div>
-                        <div class="certificate-date">August 2024</div>
-                        <div class="certificate-badge">Professional</div>
+                        <span class="certificate-badge professional">Professional</span>
+                        <h3 class="certificate-title">Digital Marketing Professional</h3>
+                        <p class="certificate-issuer">Pace Lab</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> August 2024</p>
                     </div>
                 </div>
 
-                <div class="certificate-card">
+                <!-- AI Builders Google -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
-                        <img src="images/AI SUMMIT.png" alt="AI Certificate">
-                        <div class="certificate-overlay"></div>
+                        <img src="images/AI SUMMIT.png" alt="AI Builders Lab" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">AI Builders Lab</div>
-                        <div class="certificate-issuer">Google</div>
-                        <div class="certificate-date">January 2025</div>
-                        <div class="certificate-badge">Complete</div>
+                        <span class="certificate-badge">Complete</span>
+                        <h3 class="certificate-title">AI Builders Lab</h3>
+                        <p class="certificate-issuer">Google</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> January 2025</p>
                     </div>
                 </div>
 
-                <div class="certificate-card">
+                <!-- HubSpot Inbound -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
-                        <img src="images/Inbound Marketing Certification.png" alt="Inbound Marketing Certificate">
-                        <div class="certificate-overlay"></div>
+                        <img src="images/Inbound Marketing Certification.png" alt="Inbound Marketing Certified" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">Inbound Marketing Certified</div>
-                        <div class="certificate-issuer">HubSpot Academy</div>
-                        <div class="certificate-date">September 2025</div>
-                        <div class="certificate-badge">Certified</div>
+                        <span class="certificate-badge">Certified</span>
+                        <h3 class="certificate-title">Inbound Marketing Certified</h3>
+                        <p class="certificate-issuer">HubSpot Academy</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> September 2025</p>
                     </div>
                 </div>
 
-                <div class="certificate-card">
+                <!-- Infosys CyberSecurity -->
+                <div class="certificate-card reveal-item">
+                    <div class="card-glow"></div>
                     <div class="certificate-image">
-                        <img src="images/Infosys CY.jpg" alt="Cybersecurity Certificate">
-                        <div class="certificate-overlay"></div>
+                        <img src="images/Infosys CY.jpg" alt="Introduction to Cyber Security" loading="lazy" decoding="async">
+                        <div class="certificate-overlay">
+                            <span class="zoom-badge"><i class="fas fa-expand"></i> View Certificate</span>
+                        </div>
                     </div>
                     <div class="certificate-content">
-                        <div class="certificate-title">Introduction to Cyber Security</div>
-                        <div class="certificate-issuer">Infosys</div>
-                        <div class="certificate-date">April 2024</div>
-                        <div class="certificate-badge">Complete</div>
+                        <span class="certificate-badge">Complete</span>
+                        <h3 class="certificate-title">Introduction to Cyber Security</h3>
+                        <p class="certificate-issuer">Infosys</p>
+                        <p class="certificate-date"><i class="far fa-calendar"></i> April 2024</p>
                     </div>
                 </div>
             </div>
 
-            <div class="view-all-certificates">
-                <a href="https://drive.google.com/drive/folders/1Yvm46WvrFr3UYw4DjoU73AtUErBiGc_v" class="btn">
-                    <i class="fas fa-certificate"></i> View All Certificates
+            <div class="view-all-certificates reveal-item">
+                <a href="https://drive.google.com/drive/folders/1Yvm46WvrFr3UYw4DjoU73AtUErBiGc_v" target="_blank"
+                    class="btn btn-secondary magnetic-btn">
+                    <i class="fas fa-graduation-cap"></i> View All Certificates
                 </a>
             </div>
         </section>
 
         <!-- Design Showcase Section -->
-        <section id="designs">
-            <h2>Design Showcase</h2>
-            <div class="design-showcase-container">
+        <section id="designs" class="designs-section">
+            <h2 class="section-title">Design Showcase</h2>
+            <p class="section-subtitle">A collection of custom graphic layouts, mobile wireframes, and branding artwork
+            </p>
+
+            <div class="design-showcase-container reveal-item">
                 <div class="design-viewer">
                     <div class="design-viewport" id="designViewport">
-                        <!-- Design Slide 1 -->
+                        <!-- Slide 1 -->
                         <div class="design-slide active" data-slide="0">
                             <div class="design-image">
-                                <img src="images/open.jpg" alt="FindAStartup Design">
+                                <img src="images/open.jpg" alt="FindAStartup Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">PaceLab</div>
+                                <h3 class="design-title">PaceLab Brand Assets</h3>
+                                <span class="design-tag">Campaign Layout</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 2 -->
+                        <!-- Slide 2 -->
                         <div class="design-slide" data-slide="1">
                             <div class="design-image">
-                                <img src="images/spider.jpg" alt="PaceLab Design">
+                                <img src="images/spider.jpg" alt="PaceLab Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">PaceLab</div>
+                                <h3 class="design-title">PaceLab Interactive Graphic</h3>
+                                <span class="design-tag">Social Art</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 3 -->
+                        <!-- Slide 3 -->
                         <div class="design-slide" data-slide="2">
                             <div class="design-image">
-                                <img src="images/fggg.jpg" alt="Social Media Design">
+                                <img src="images/fggg.jpg" alt="Social Media Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup UI Kit</h3>
+                                <span class="design-tag">UI Mockup</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 4 -->
+                        <!-- Slide 4 -->
                         <div class="design-slide" data-slide="3">
                             <div class="design-image">
-                                <img src="images/offer.jpg" alt="Fitness App Design">
+                                <img src="images/offer.jpg" alt="Fitness App Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">PaceLab</div>
+                                <h3 class="design-title">PaceLab Promotional Art</h3>
+                                <span class="design-tag">Marketing Graphics</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 5 -->
+                        <!-- Slide 5 -->
                         <div class="design-slide" data-slide="4">
                             <div class="design-image">
-                                <img src="images/python.jpg" alt="Food Delivery App Design">
+                                <img src="images/python.jpg" alt="Food Delivery App Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup Campaign Graphic</h3>
+                                <span class="design-tag">Branding Visual</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 6 -->
+                        <!-- Slide 6 -->
                         <div class="design-slide" data-slide="5">
                             <div class="design-image">
-                                <img src="images/app.jpg" alt="Music App Design">
+                                <img src="images/app.jpg" alt="Music App Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup Mobile Prototyping</h3>
+                                <span class="design-tag">App Interface</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 7 -->
+                        <!-- Slide 7 -->
                         <div class="design-slide" data-slide="6">
                             <div class="design-image">
-                                <img src="images/!12.jpg" alt="Food Delivery App Design">
+                                <img src="images/!12.jpg" alt="Food Delivery App Design" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup UI Redesign</h3>
+                                <span class="design-tag">Interface Design</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 8 -->
+                        <!-- Slide 8 -->
                         <div class="design-slide" data-slide="7">
                             <div class="design-image">
                                 <img src="images/Orange and Green Vibrant Independence Day of India Greetings Instagram Post.jpg"
-                                    alt="Music App Design">
+                                    alt="Independence Day Post" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup Celebration Post</h3>
+                                <span class="design-tag">Digital Campaign</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 9 -->
+                        <!-- Slide 9 -->
                         <div class="design-slide" data-slide="8">
                             <div class="design-image">
-                                <img src="images/block.jpeg" alt="Music App Design">
+                                <img src="images/block.jpeg" alt="Blockchain Post" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">FindAStartup</div>
+                                <h3 class="design-title">FindAStartup Technical Layout</h3>
+                                <span class="design-tag">Infographics</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 10 -->
+                        <!-- Slide 10 -->
                         <div class="design-slide" data-slide="9">
                             <div class="design-image">
-                                <img src="images/1.jpg" alt="Data Science & Cloud">
+                                <img src="images/1.jpg" alt="Data Science & Cloud" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">Data Science & Cloud</div>
+                                <h3 class="design-title">Data Science & Cloud</h3>
+                                <span class="design-tag">Tech Cover</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 11 -->
+                        <!-- Slide 11 -->
                         <div class="design-slide" data-slide="10">
                             <div class="design-image">
-                                <img src="images/IEDC_2.jpg" alt="IEDC">
+                                <img src="images/IEDC_2.jpg" alt="IEDC" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">IEDC</div>
+                                <h3 class="design-title">IEDC SJCET Digital Media</h3>
+                                <span class="design-tag">Poster Art</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 12 -->
+                        <!-- Slide 12 -->
                         <div class="design-slide" data-slide="11">
                             <div class="design-image">
-                                <img src="images/Placement_new.jpg" alt="Placement">
+                                <img src="images/Placement_new.jpg" alt="Placement" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">Placement</div>
+                                <h3 class="design-title">Collegiate Placement Cover</h3>
+                                <span class="design-tag">Editorial Cover</span>
                             </div>
                         </div>
 
-                        <!-- Design Slide 13 -->
+                        <!-- Slide 13 -->
                         <div class="design-slide" data-slide="12">
                             <div class="design-image">
-                                <img src="images/3.jpg" alt="3 Day Internship">
+                                <img src="images/3.jpg" alt="3 Day Internship" loading="lazy" decoding="async">
                             </div>
                             <div class="design-info">
-                                <div class="design-title">3 Day Internship</div>
+                                <h3 class="design-title">3-Day Internship Briefing</h3>
+                                <span class="design-tag">Workshop Campaign</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Navigation Arrows -->
+                    <!-- Navigation Controls -->
                     <div class="design-nav prev" onclick="previousDesign()">
                         <i class="fas fa-chevron-left"></i>
                     </div>
@@ -534,13 +760,13 @@
                         <i class="fas fa-chevron-right"></i>
                     </div>
 
-                    <!-- Design Counter -->
+                    <!-- Design Counter Badge -->
                     <div class="design-counter">
-                        <span id="currentDesign">1</span> / <span id="totalDesigns">9</span>
+                        <span id="currentDesign">1</span> / <span id="totalDesigns">13</span>
                     </div>
                 </div>
 
-                <!-- Design Indicators -->
+                <!-- Navigation Indicators -->
                 <div class="design-indicators" id="designIndicators">
                     <div class="indicator active" onclick="goToDesign(0)"></div>
                     <div class="indicator" onclick="goToDesign(1)"></div>
@@ -555,131 +781,208 @@
                     <div class="indicator" onclick="goToDesign(10)"></div>
                     <div class="indicator" onclick="goToDesign(11)"></div>
                     <div class="indicator" onclick="goToDesign(12)"></div>
-
                 </div>
 
-                <!-- Swipe Hint -->
+                <!-- Swipe Gesture Prompt -->
                 <div class="swipe-hint">
                     <i class="fas fa-hand-pointer"></i>
-                    Swipe or use arrow keys to navigate
-                    <i class="fas fa-hand-pointer"></i>
+                    Swipe or use arrow keys to browse designs
                 </div>
             </div>
         </section>
 
-        <!-- Projects section -->
-        <section id="projects">
-            <h2>My Projects</h2>
-            <div class="projects-container">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="images/ridesafe.png" alt="RideSafe Project">
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <h2 class="section-title">Featured Engineering Work</h2>
+            <div class="projects-grid">
+                <!-- RideSafe -->
+                <div class="project-card reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="project-img-wrapper">
+                        <img src="images/ridesafe.png" alt="RideSafe Project" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">Flutter</span>
+                            <span class="tag">IoT</span>
+                            <span class="tag">Hardware</span>
+                        </div>
                         <h3>RideSafe</h3>
-                        <p>An add-on safety system for motorcycles integrating helmet detection, speed alerts,
-                            ultrasonic obstacle sensing, and live GPS tracking via a mobile app.</p>
+                        <p>An intelligent add-on motorcycle safety apparatus incorporating automated helmet detection,
+                            speed alerts, ultrasonic obstacle mapping, and real-time GPS coordinates via a native mobile
+                            dashboard.</p>
                         <div class="project-links">
-                            <a href="https://github.com/Midhun-jomi/RideSafe"><i class="fab fa-github"></i> GitHub</a>
-                            <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            <a href="https://github.com/Midhun-jomi/RideSafe" target="_blank"
+                                class="project-link link-github"><i class="fab fa-github"></i> Repository</a>
+                            <a href="#" class="project-link link-live"><i class="fas fa-circle-play"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="images/dis.png" alt="DisasterLink Project">
+
+                <!-- DisasterLink -->
+                <div class="project-card reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="project-img-wrapper">
+                        <img src="images/dis.png" alt="DisasterLink Project" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">Offline Net</span>
+                            <span class="tag">Ad-Hoc</span>
+                            <span class="tag">Resilience</span>
+                        </div>
                         <h3>DisasterLink</h3>
-                        <p>An offline communication network for crisis zones, enabling text-based communication and
-                            coordination without internet connectivity.</p>
+                        <p>An offline mobile communication framework designed for emergency rescue grids. Enables secure
+                            text-based local coordinate coordination without standard internet or cellular network
+                            connectivity.</p>
                         <div class="project-links">
-                            <a href="#"><i class="fab fa-github"></i> GitHub</a>
-                            <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="images/uiux.png" alt="FindAStartup UI/UX">
-                    </div>
-                    <div class="project-content">
-                        <h3>FindAStartup (UI/UX Design)</h3>
-                        <p>Designed an intuitive and visually appealing interface for FindAStartup, focusing on
-                            user-friendly navigation, startup discovery, and streamlined user interactions.</p>
-                        <div class="project-links">
-                            <a href="#"><i class="fab fa-github"></i> GitHub</a>
-                            <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            <a href="#" class="project-link link-github"><i class="fab fa-github"></i> Repository</a>
+                            <a href="#" class="project-link link-live"><i class="fas fa-circle-play"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- New Project Placeholder -->
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="images/Note.png" alt="Collaborative-note-app">
+                <!-- FindAStartup UX -->
+                <div class="project-card reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="project-img-wrapper">
+                        <img src="images/uiux.png" alt="FindAStartup UI/UX" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">Figma</span>
+                            <span class="tag">Prototyping</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                        <h3>FindAStartup UI/UX Design</h3>
+                        <p>Engineered an intuitive mobile application layout and interactive design framework for
+                            FindAStartup, streamlining discovery algorithms and startup-to-developer interactions.</p>
+                        <div class="project-links">
+                            <a href="#" class="project-link link-github"><i class="fab fa-github"></i> Figma Link</a>
+                            <a href="#" class="project-link link-live"><i class="fas fa-circle-play"></i>
+                                Interaction</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collaborative Note App -->
+                <div class="project-card reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="project-img-wrapper">
+                        <img src="images/Note.png" alt="Collaborative Note App" loading="lazy" decoding="async">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-tags">
+                            <span class="tag">Next.js</span>
+                            <span class="tag">Realtime</span>
+                            <span class="tag">Socket.io</span>
+                        </div>
                         <h3>Collaborative-note-app</h3>
-                        <p>Designed an intuitive and visually engaging interface for a collaborative note-taking app,
-                            emphasizing real-time collaboration, seamless organization, and effortless user interaction.
+                        <p>Designed and built a highly collaborative realtime text notepad, incorporating instant
+                            multi-client syncing, hierarchical markdown management, and sleek dynamic note dashboards.
                         </p>
                         <div class="project-links">
-                            <a href="https://github.com/Midhun-jomi/collaborative-note-app"><i
-                                    class="fab fa-github"></i> GitHub</a>
-                            <a href="https://collaborative-note-app-cyan.vercel.app/"><i
-                                    class="fas fa-external-link-alt"></i> Live Demo</a>
+                            <a href="https://github.com/Midhun-jomi/collaborative-note-app" target="_blank"
+                                class="project-link link-github"><i class="fab fa-github"></i> Repository</a>
+                            <a href="https://collaborative-note-app-cyan.vercel.app/" target="_blank"
+                                class="project-link link-live"><i class="fas fa-globe"></i> Visit Site</a>
                         </div>
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="images/adms.png" alt="ADMS">
+                <!-- ADMS -->
+                <div class="project-card reveal-item">
+                    <div class="card-glow"></div>
+                    <div class="project-img-wrapper">
+                        <img src="images/adms.png" alt="ADMS" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
-                        <h3>ADMS</h3>
-                        <p>Designed and developed a fully functional Hospital Management System focusing on efficient
-                            patient management, streamlined hospital workflows, and reliable system operations.
+                        <div class="project-tags">
+                            <span class="tag">Fullstack</span>
+                            <span class="tag">PHP</span>
+                            <span class="tag">Database</span>
+                        </div>
+                        <h3>ADMS Hospital System</h3>
+                        <p>A comprehensive Hospital and Database Management Application providing electronic health
+                            records (EHR), nurse vital triggers, blood bank stock systems, and administrative charts.
                         </p>
                         <div class="project-links">
-                            <a href="https://github.com/Midhun-jomi/ADMS"><i class="fab fa-github"></i> GitHub</a>
-                            <a href="https://adms-g7la.onrender.com/index.php"><i class="fas fa-external-link-alt"></i>
-                                Live Demo</a>
+                            <a href="https://github.com/Midhun-jomi/ADMS" target="_blank"
+                                class="project-link link-github"><i class="fab fa-github"></i> Repository</a>
+                            <a href="https://adms-g7la.onrender.com/index.php" target="_blank"
+                                class="project-link link-live"><i class="fas fa-globe"></i> Visit Site</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact section -->
-        <section id="contact">
-            <h2>Get In Touch</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p><i class="fas fa-envelope"></i> mjcmidhun@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +91 9496469276</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Kottayam, Kerala, India</p>
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <!-- Info Glass Card -->
+                <div class="contact-info-card reveal-item">
+                    <div class="card-glow"></div>
+                    <h3>Start a Conversation</h3>
+                    <p>Have an interesting project, internship opportunity, or just want to discuss innovative product
+                        designs? Feel free to reach out via my coordinates:</p>
+
+                    <div class="contact-methods">
+                        <div class="method">
+                            <div class="method-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="method-text">
+                                <span>Email Me</span>
+                                <strong>mjcmidhun@gmail.com</strong>
+                            </div>
+                        </div>
+
+                        <div class="method">
+                            <div class="method-icon"><i class="fas fa-phone"></i></div>
+                            <div class="method-text">
+                                <span>Call Me</span>
+                                <strong>+91 9496469276</strong>
+                            </div>
+                        </div>
+
+                        <div class="method">
+                            <div class="method-icon"><i class="fas fa-location-dot"></i></div>
+                            <div class="method-text">
+                                <span>Located In</span>
+                                <strong>Kottayam, Kerala, India</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="contact-form">
-                    <h3>Send Me a Message</h3>
+
+                <!-- Form Glass Card -->
+                <div class="contact-form-card reveal-item">
+                    <div class="card-glow"></div>
+                    <h3>Send a Direct Message</h3>
                     <form id="contactForm"
                         action="https://script.google.com/macros/s/AKfycbwFlTzHW4yKLNa_yR_knSr_Pl7GfSCT2vD0Z06lStjHBOgd4I2NanupuLUK1IY1sajB/exec"
                         method="POST">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required placeholder="Name">
+                                <span class="focus-line"></span>
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required placeholder="Email">
+                                <span class="focus-line"></span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                        <div class="input-group">
+                            <label for="message">Message Details</label>
+                            <textarea id="message" name="message" required
+                                placeholder="Hi Midhun, I would love to connect with you regarding..."></textarea>
+                            <span class="focus-line"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="btn btn-primary magnetic-btn">
+                            <span>Send Message</span> <i class="fas fa-paper-plane"></i>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -688,22 +991,33 @@
 
     <!-- Footer -->
     <footer>
-        <div class="social-links">
-            <a href="https://github.com/Midhun-jomi"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/midhun-jomi-c/"><i class="fab fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/midhun_jomi/"><i class="fab fa-instagram"></i></a>
+        <div class="footer-content">
+            <div class="footer-socials">
+                <a href="https://github.com/Midhun-jomi" target="_blank" class="social-link magnetic-btn"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/midhun-jomi-c/" target="_blank" class="social-link magnetic-btn"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/midhun_jomi/" target="_blank" class="social-link magnetic-btn"><i
+                        class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">&copy; <span id="currentYear">2026</span> Midhun Jomi C. Crafted with absolute
+                precision & premium aesthetics.</p>
         </div>
-        <p>&copy; Midhun Jomi C </p>
     </footer>
 
-    <!-- Certificate Modal -->
+    <!-- Image Lightbox Modal -->
     <div id="certificateModal" class="certificate-modal">
         <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div id="caption"></div>
+        <div class="modal-wrapper">
+            <img class="modal-content" id="modalImage" alt="Certificate Preview">
+            <div id="caption"></div>
+        </div>
     </div>
 
+    <!-- Loaded Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+    <!-- Custom REDESIGN Javascript -->
     <script src="js/script.js"></script>
 </body>
 
